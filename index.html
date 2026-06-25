@@ -54,6 +54,22 @@
       text-transform: uppercase;
       font-weight: 500;
     }
+    .section-heading {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.15;
+      margin: 0 0 8px;
+      color: #0A0A0A;
+    }
+    .section-subheading {
+      font-size: clamp(20px, 2.4vw, 30px);
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      line-height: 1.25;
+      margin: 0 0 16px;
+      color: inherit;
+    }
 
     /* ─── 1. NAV ────────────────────────────────────────────────── */
     #nav {
@@ -433,8 +449,15 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .how-header .section-label { color: var(--green); }
+    .how-headline {
+      font-size: clamp(36px, 4.5vw, 56px);
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.5px;
+      margin: 0;
+    }
     .how-header-note { font-size: 13px; color: #666; font-style: italic; }
+    .how-header-intro { font-size: 14px; color: #555; line-height: 1.7; margin-top: 10px; max-width: 620px; }
 
     /* Sticky scroll outer — tall enough for N cards × 100vh */
     .how-sticky-outer {
@@ -461,37 +484,30 @@
       pointer-events: auto;
     }
     .how-card-visual {
-      background-color: var(--green);
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
+      background: var(--green);
       display: flex;
       align-items: flex-end;
       padding: 48px;
       position: relative;
       overflow: hidden;
-      height: 100%;
     }
-    .how-card-visual::after {
-      content: '';
+    .how-card-visual-img {
       position: absolute;
       inset: 0;
-      background: rgba(23, 77, 56, 0.35);
-      pointer-events: none;
-    }
-    .how-card-visual-num {
-      position: relative;
-      z-index: 1;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
     }
     .how-card-visual-num {
       font-size: clamp(120px, 18vw, 200px);
       font-weight: 800;
-      color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.1);
       line-height: 1;
       letter-spacing: -6px;
-      position: relative;
-      z-index: 1;
-      align-self: flex-end;
+      position: absolute;
+      bottom: 24px;
+      right: 32px;
       pointer-events: none;
       user-select: none;
     }
@@ -557,9 +573,9 @@
       transform: scale(1.4);
     }
     @media (max-width: 768px) {
-      .how-card { grid-template-columns: 1fr; grid-template-rows: 240px 1fr; }
-      .how-card-visual { display: flex; height: 240px; }
-      .how-card-text { padding: 32px 24px; justify-content: flex-start; padding-top: 32px; }
+      .how-card { grid-template-columns: 1fr; }
+      .how-card-visual { display: none; }
+      .how-card-text { padding: 40px 28px; justify-content: flex-start; padding-top: 80px; }
     }
 
     /* ─── 5. LEGAL ARCHITECTURE ──────────────────────────────────── */
@@ -586,7 +602,7 @@
       display: block;
     }
     .legal-headline {
-      font-size: 48px;
+      font-size: clamp(42px, 5vw, 64px);
       font-weight: 700;
       color: #0A0A0A;
       line-height: 1.05;
@@ -690,7 +706,7 @@
     }
     .evolution-header { margin-bottom: 56px; }
     .evolution-heading {
-      font-size: 36px;
+      font-size: clamp(36px, 4.5vw, 56px);
       font-weight: 700;
       color: #0A0A0A;
       letter-spacing: -0.5px;
@@ -711,7 +727,7 @@
       position: absolute;
       left: 13px;
       top: 6px;
-      bottom: 24px;
+      bottom: 6px;
       width: 2px;
       background: linear-gradient(to bottom, var(--green) 0%, #CECECE 60%, #E8E8E8 100%);
     }
@@ -774,6 +790,39 @@
       .milestone-rows { max-width: 100%; }
     }
 
+    /* ── TIMELINE COLLAPSE ──────────────────────────────────────── */
+    .milestone-history {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+      opacity: 0;
+    }
+    .milestone-history.expanded {
+      max-height: 1200px;
+      opacity: 1;
+    }
+    .timeline-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      margin-bottom: 28px;
+      background: none;
+      border: 1.5px solid var(--green);
+      color: var(--green);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 7px 16px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .timeline-toggle:hover { background: var(--green); color: #fff; }
+    .timeline-toggle svg { transition: transform 0.35s ease; }
+    .timeline-toggle.open svg { transform: rotate(180deg); }
+
     /* ─── 7. POLICY LANDSCAPE ───────────────────────────────────── */
     #policy {
       padding: var(--section-pad) 0;
@@ -786,7 +835,7 @@
     }
     .policy-header { margin-bottom: 40px; }
     .policy-heading {
-      font-size: 36px;
+      font-size: clamp(36px, 4.5vw, 56px);
       font-weight: 700;
       color: #0A0A0A;
       letter-spacing: -0.5px;
@@ -1506,23 +1555,15 @@
   <div class="stats-inner">
     <div class="stat-item">
       <span class="stat-value" id="stat-0">1.9t</span>
-      <span class="stat-label">Per Capita CO₂</span>
+      <span class="stat-label">CO₂ per person per year</span>
     </div>
     <div class="stat-item">
       <span class="stat-value" id="stat-1">45%</span>
-      <span class="stat-label">NDC Reduction Target</span>
+      <span class="stat-label">NDC Emissions Intensity Cut by 2030</span>
     </div>
     <div class="stat-item">
       <span class="stat-value" id="stat-2">203 GW</span>
-      <span class="stat-label">Renewable Capacity</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value" id="stat-active">Active</span>
-      <span class="stat-label">Carbon Market Status</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value" id="stat-3">14+</span>
-      <span class="stat-label">Policies Tracked</span>
+      <span class="stat-label">Installed Renewable Capacity</span>
     </div>
   </div>
 </section>
@@ -1533,7 +1574,7 @@
 <section id="news" aria-labelledby="news-heading">
   <div class="news-inner">
     <div class="news-header">
-      <span class="news-section-label" id="news-heading">What Changed This Week</span>
+      <h2 class="section-heading" id="news-heading">What Changed This Week</h2>
       <a href="#" class="news-all-link">All updates →</a>
     </div>
     <p class="news-date-line">Best of 25 June 2026</p>
@@ -1601,7 +1642,7 @@
 
     <!-- Section header row -->
     <div class="paradox-header">
-      <span class="section-label" id="paradox-heading">India's carbon paradox</span>
+      <h2 class="section-heading" id="paradox-heading">India's carbon paradox</h2>
       <span class="paradox-header-note">Per capita CO₂ · tonnes per person per year</span>
     </div>
 
@@ -1701,8 +1742,8 @@
 <section id="legal" aria-labelledby="legal-heading">
   <div class="legal-inner">
     <div class="legal-left">
-      <span class="section-label">The Legal Architecture</span>
-      <h2 class="legal-headline" id="legal-heading">Three layers.<br>One market.</h2>
+      <h2 class="section-heading" id="legal-heading">The Legal Architecture</h2>
+      <p class="section-subheading">Three layers.<br>One market.</p>
       <p class="legal-sub">India's carbon market is built on the Energy Conservation Act — amended in 2022 to explicitly authorise carbon trading. On top of that sits the Carbon Credit Trading Scheme, which defines who participates and how credits are issued. The rules and methodologies underneath specify exactly how entities measure, report, and trade.</p>
     </div>
 
@@ -1750,15 +1791,17 @@
 <section id="how-it-works" aria-labelledby="how-heading">
 
   <div class="how-header">
-    <span class="section-label" id="how-heading">How the market works</span>
+    <h2 class="section-heading" id="how-heading">How the market works</h2>
     <span class="how-header-note">India's Carbon Credit Trading Scheme — the mechanics</span>
+    <p class="how-header-intro">The Carbon Credit Trading Scheme (CCTS) creates compliance obligations for 800+ industrial units across 9 hard-to-abate sectors, launched under the Energy Conservation Act 2022. Here's the five-step cycle every obligated entity goes through.</p>
   </div>
 
   <div class="how-sticky-outer" id="how-sticky-outer">
     <div class="how-sticky-inner" id="how-sticky-inner">
 
       <div class="how-card active" data-index="0">
-        <div class="how-card-visual" style="background-image:url('step1.jpg');background-position:center center;">
+        <div class="how-card-visual">
+          <img class="how-card-visual-img" src="ChatGPT%20Image%20Jun%2025%2C%202026%2C%2011_19_39%20AM.jpg" alt="" aria-hidden="true">
           <span class="how-card-visual-num">01</span>
         </div>
         <div class="how-card-text">
@@ -1769,7 +1812,8 @@
       </div>
 
       <div class="how-card" data-index="1">
-        <div class="how-card-visual" style="background-image:url('step2.jpg');background-position:center center;">
+        <div class="how-card-visual">
+          <img class="how-card-visual-img" src="Gemini_Generated_Image_99bjoc99bjoc99bj.jpg" alt="" aria-hidden="true">
           <span class="how-card-visual-num">02</span>
         </div>
         <div class="how-card-text">
@@ -1780,7 +1824,8 @@
       </div>
 
       <div class="how-card" data-index="2">
-        <div class="how-card-visual" style="background-image:url('step3.jpg');background-position:center center;">
+        <div class="how-card-visual">
+          <img class="how-card-visual-img" src="Gemini_Generated_Image_vltubgvltubgvltu.jpg" alt="" aria-hidden="true">
           <span class="how-card-visual-num">03</span>
         </div>
         <div class="how-card-text">
@@ -1791,7 +1836,8 @@
       </div>
 
       <div class="how-card" data-index="3">
-        <div class="how-card-visual" style="background-image:url('https://images.unsplash.com/photo-1767424412548-1a1ac7f4b9bc?w=1024&auto=format&fit=crop&q=80');background-position:center center;">
+        <div class="how-card-visual">
+          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1767424412548-1a1ac7f4b9bc?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true">
           <span class="how-card-visual-num">04</span>
         </div>
         <div class="how-card-text">
@@ -1802,7 +1848,8 @@
       </div>
 
       <div class="how-card" data-index="4">
-        <div class="how-card-visual" style="background-image:url('https://images.unsplash.com/photo-1773433392027-2dff23126d86?w=1024&auto=format&fit=crop&q=80');background-position:center center;">
+        <div class="how-card-visual" style="background: #0F3828;">
+          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1773433392027-2dff23126d86?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true">
           <span class="how-card-visual-num">05</span>
         </div>
         <div class="how-card-text">
@@ -1832,7 +1879,7 @@
 <section id="policy" aria-labelledby="policy-heading">
   <div class="policy-inner">
     <div class="policy-header">
-      <h2 class="policy-heading" id="policy-heading">India's Carbon Policy Framework</h2>
+      <h2 class="section-heading" id="policy-heading">India's Carbon Policy Framework</h2>
       <p class="policy-sub">The Acts, Regulations, Schemes, and Compliance Frameworks shaping India's carbon markets.</p>
     </div>
 
@@ -1914,8 +1961,8 @@
 <section id="compliance" aria-labelledby="compliance-heading">
   <div class="compliance-inner">
     <div class="compliance-left">
-      <p class="compliance-label">Compliance Check</p>
-      <h2 class="compliance-headline" id="compliance-heading">Does this affect your business?</h2>
+      <h2 class="section-heading" id="compliance-heading-label" style="color:#fff;">Compliance Check</h2>
+      <p class="section-subheading">Does this affect your business?</p>
       <p class="compliance-sub">Check your exposure to PAT, CCTS, and the EU Carbon Border Tax in three steps.</p>
     </div>
 
@@ -1968,48 +2015,13 @@
 <section id="evolution" aria-labelledby="evolution-heading">
   <div class="evolution-inner">
     <div class="evolution-header">
-      <h2 class="evolution-heading" id="evolution-heading">The evolution of India's carbon market</h2>
+      <h2 class="section-heading" id="evolution-heading">The evolution of India's carbon market</h2>
       <p class="evolution-sub">Key policy milestones</p>
     </div>
 
     <div class="milestone-rows" id="milestone-rows">
 
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2005</div>
-          <div class="milestone-card-title">CDM Participation Begins</div>
-          <div class="milestone-card-desc">India joins the Clean Development Mechanism under the Kyoto Protocol, becoming one of the largest CDM credit suppliers globally. Projects in renewables, energy efficiency, and waste management generate Certified Emission Reductions (CERs).</div>
-        </div>
-      </div>
-
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2012</div>
-          <div class="milestone-card-title">PAT Scheme Launched</div>
-          <div class="milestone-card-desc">Bureau of Energy Efficiency launches the Perform Achieve &amp; Trade scheme — India's first domestic market-based energy efficiency mechanism. Designated Consumers in 8 industrial sectors receive specific energy consumption targets.</div>
-        </div>
-      </div>
-
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2022</div>
-          <div class="milestone-card-title">EC Act Amended — Carbon Markets Legalised</div>
-          <div class="milestone-card-desc">The Energy Conservation (Amendment) Act 2022 explicitly enables the establishment of a carbon market in India. This legislative change gave MoEF the authority to notify a Carbon Credit Trading Scheme.</div>
-        </div>
-      </div>
-
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2023</div>
-          <div class="milestone-card-title">CCTS Notified</div>
-          <div class="milestone-card-desc">The Carbon Credit Trading Scheme is officially notified by MoEF. It establishes a compliance market (mandatory for Designated Consumers) and an offset market (voluntary). BEE is designated the administrator.</div>
-        </div>
-      </div>
-
+      <!-- "Now" always visible -->
       <div class="milestone-row">
         <div class="milestone-row-left"><div class="milestone-dot"></div></div>
         <div class="milestone-card" style="border-color: var(--green); background: #F4FAF7;">
@@ -2020,6 +2032,57 @@
       </div>
 
     </div>
+
+    <!-- Toggle button -->
+    <button class="timeline-toggle" id="timeline-toggle" aria-expanded="false" aria-controls="milestone-history">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Show history
+    </button>
+
+    <!-- Collapsed history -->
+    <div class="milestone-history" id="milestone-history">
+      <div class="milestone-rows" style="padding-top: 4px;">
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2023</div>
+            <div class="milestone-card-title">CCTS Notified</div>
+            <div class="milestone-card-desc">The Carbon Credit Trading Scheme is officially notified by MoEF. It establishes a compliance market (mandatory for Designated Consumers) and an offset market (voluntary). BEE is designated the administrator.</div>
+          </div>
+        </div>
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2022</div>
+            <div class="milestone-card-title">EC Act Amended — Carbon Markets Legalised</div>
+            <div class="milestone-card-desc">The Energy Conservation (Amendment) Act 2022 explicitly enables the establishment of a carbon market in India. This legislative change gave MoEF the authority to notify a Carbon Credit Trading Scheme.</div>
+          </div>
+        </div>
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2012</div>
+            <div class="milestone-card-title">PAT Scheme Launched</div>
+            <div class="milestone-card-desc">Bureau of Energy Efficiency launches the Perform Achieve &amp; Trade scheme — India's first domestic market-based energy efficiency mechanism. Designated Consumers in 8 industrial sectors receive specific energy consumption targets.</div>
+          </div>
+        </div>
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2005</div>
+            <div class="milestone-card-title">CDM Participation Begins</div>
+            <div class="milestone-card-desc">India joins the Clean Development Mechanism under the Kyoto Protocol, becoming one of the largest CDM credit suppliers globally. Projects in renewables, energy efficiency, and waste management generate Certified Emission Reductions (CERs).</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2029,8 +2092,8 @@
 <section id="global" aria-labelledby="global-heading">
   <div class="global-inner">
     <div class="global-left">
-      <p class="global-label">Global Context</p>
-      <h2 class="global-headline" id="global-heading">The EU's carbon border tax changes the equation.</h2>
+      <h2 class="section-heading" id="global-heading-label" style="color:#fff;">Global Context</h2>
+      <p class="section-subheading" style="color:#fff;">The EU's carbon border tax changes the equation.</p>
       <p class="global-sub">CBAM means Indian steel and aluminium exporters now face a choice: pay carbon costs in Brussels, or prove they already paid them at home. A credible domestic market changes the math entirely.</p>
       <div class="global-stat-card">
         <div class="global-stat-value">~$8–12B</div>
@@ -2110,7 +2173,7 @@
   </div>
   <div class="footer-bottom">
     <div class="footer-bottom-inner">
-      <p class="footer-copy">© 2025 RenewCred</p>
+      <p class="footer-copy">© 2026 Carbon Pulse</p>
     </div>
   </div>
 </footer>
@@ -2392,6 +2455,20 @@ document.addEventListener('DOMContentLoaded', function () {
       window.scrollTo({ top: top, behavior: 'smooth' });
     });
   });
+
+  // Timeline toggle
+  const tlBtn = document.getElementById('timeline-toggle');
+  const tlHistory = document.getElementById('milestone-history');
+  if (tlBtn && tlHistory) {
+    tlBtn.addEventListener('click', () => {
+      const open = tlHistory.classList.toggle('expanded');
+      tlBtn.classList.toggle('open', open);
+      tlBtn.setAttribute('aria-expanded', open);
+      tlBtn.innerHTML = open
+        ? `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 9l5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Hide history`
+        : `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Show history`;
+    });
+  }
 
 });
 </script>
