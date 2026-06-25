@@ -581,7 +581,7 @@
 
     /* ─── 5. LEGAL ARCHITECTURE ──────────────────────────────────── */
     #legal {
-      padding: var(--section-pad) 0;
+      padding: 0 0 var(--section-pad);
       background: var(--bg);
     }
     .legal-inner {
@@ -593,13 +593,14 @@
       gap: 80px;
       align-items: start;
     }
+    .legal-heading-row {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: var(--section-pad) var(--h-pad) 40px;
+    }
     .legal-left {
       position: sticky;
       top: 100px;
-    }
-    .legal-left .section-heading {
-      font-size: clamp(28px, 3vw, 38px);
-      white-space: nowrap;
     }
     .legal-left .section-label {
       color: var(--green);
@@ -1749,9 +1750,11 @@
 <!-- 5. LEGAL ARCHITECTURE                                          -->
 <!-- ══════════════════════════════════════════════════════════════ -->
 <section id="legal" aria-labelledby="legal-heading">
+  <div class="legal-heading-row">
+    <h2 class="section-heading" id="legal-heading">The Legal Architecture</h2>
+  </div>
   <div class="legal-inner">
     <div class="legal-left">
-      <h2 class="section-heading" id="legal-heading">The Legal Architecture</h2>
       <p class="section-subheading">Three layers.<br>One market.</p>
       <p class="legal-sub">India's carbon market is built on the Energy Conservation Act — amended in 2022 to explicitly authorise carbon trading. On top of that sits the Carbon Credit Trading Scheme, which defines who participates and how credits are issued. The rules and methodologies underneath specify exactly how entities measure, report, and trade.</p>
     </div>
