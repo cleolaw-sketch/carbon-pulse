@@ -462,6 +462,9 @@
     }
     .how-card-visual {
       background: var(--green);
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
       display: flex;
       align-items: flex-end;
       padding: 48px;
@@ -469,28 +472,25 @@
       overflow: hidden;
       min-height: 0;
     }
-    .how-card-visual-img {
+    .how-card-visual::after {
+      content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-      opacity: 0.55;
+      inset: 0;
+      background: rgba(10, 40, 20, 0.5);
+      pointer-events: none;
+    }
+    .how-card-visual-img {
+      display: none;
     }
     .how-card-visual-num {
       font-size: clamp(120px, 18vw, 200px);
       font-weight: 800;
-      color: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.12);
       line-height: 1;
       letter-spacing: -6px;
-      position: absolute;
-      bottom: 24px;
-      right: 32px;
+      position: relative;
+      z-index: 1;
+      align-self: flex-end;
       pointer-events: none;
       user-select: none;
     }
@@ -1757,8 +1757,7 @@
     <div class="how-sticky-inner" id="how-sticky-inner">
 
       <div class="how-card active" data-index="0">
-        <div class="how-card-visual">
-          <img class="how-card-visual-img" src="step1.jpg" alt="" aria-hidden="true">
+        <div class="how-card-visual" style="background-image:url('step1.jpg')">
           <span class="how-card-visual-num">01</span>
         </div>
         <div class="how-card-text">
@@ -1769,8 +1768,7 @@
       </div>
 
       <div class="how-card" data-index="1">
-        <div class="how-card-visual">
-          <img class="how-card-visual-img" src="Gemini_Generated_Image_99bjoc99bjoc99bj.jpg" alt="" aria-hidden="true">
+        <div class="how-card-visual" style="background-image:url('Gemini_Generated_Image_99bjoc99bjoc99bj.jpg')">
           <span class="how-card-visual-num">02</span>
         </div>
         <div class="how-card-text">
@@ -1781,8 +1779,7 @@
       </div>
 
       <div class="how-card" data-index="2">
-        <div class="how-card-visual">
-          <img class="how-card-visual-img" src="Gemini_Generated_Image_vltubgvltubgvltu.jpg" alt="" aria-hidden="true">
+        <div class="how-card-visual" style="background-image:url('Gemini_Generated_Image_vltubgvltubgvltu.jpg')">
           <span class="how-card-visual-num">03</span>
         </div>
         <div class="how-card-text">
