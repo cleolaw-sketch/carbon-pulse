@@ -472,16 +472,6 @@
       overflow: hidden;
       min-height: 0;
     }
-    .how-card-visual::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(10, 40, 20, 0.5);
-      pointer-events: none;
-    }
-    .how-card-visual-img {
-      display: none;
-    }
     .how-card-visual-num {
       font-size: clamp(120px, 18vw, 200px);
       font-weight: 800;
@@ -1757,7 +1747,7 @@
     <div class="how-sticky-inner" id="how-sticky-inner">
 
       <div class="how-card active" data-index="0">
-        <div class="how-card-visual" style="background-image:url('step1.jpg')">
+        <div class="how-card-visual">
           <span class="how-card-visual-num">01</span>
         </div>
         <div class="how-card-text">
@@ -1768,7 +1758,7 @@
       </div>
 
       <div class="how-card" data-index="1">
-        <div class="how-card-visual" style="background-image:url('Gemini_Generated_Image_99bjoc99bjoc99bj.jpg')">
+        <div class="how-card-visual">
           <span class="how-card-visual-num">02</span>
         </div>
         <div class="how-card-text">
@@ -1779,7 +1769,7 @@
       </div>
 
       <div class="how-card" data-index="2">
-        <div class="how-card-visual" style="background-image:url('Gemini_Generated_Image_vltubgvltubgvltu.jpg')">
+        <div class="how-card-visual">
           <span class="how-card-visual-num">03</span>
         </div>
         <div class="how-card-text">
@@ -1791,7 +1781,6 @@
 
       <div class="how-card" data-index="3">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1767424412548-1a1ac7f4b9bc?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true">
           <span class="how-card-visual-num">04</span>
         </div>
         <div class="how-card-text">
@@ -1802,8 +1791,7 @@
       </div>
 
       <div class="how-card" data-index="4">
-        <div class="how-card-visual" style="background: #0F3828;">
-          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1773433392027-2dff23126d86?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true">
+        <div class="how-card-visual">
           <span class="how-card-visual-num">05</span>
         </div>
         <div class="how-card-text">
