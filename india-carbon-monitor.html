@@ -767,6 +767,38 @@
       .milestone-rows { max-width: 100%; }
     }
 
+    /* ── TIMELINE COLLAPSE ──────────────────────────────────────── */
+    .milestone-history {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
+      opacity: 0;
+    }
+    .milestone-history.expanded {
+      max-height: 1200px;
+      opacity: 1;
+    }
+    .timeline-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      background: none;
+      border: 1.5px solid var(--green);
+      color: var(--green);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      padding: 7px 16px;
+      border-radius: 99px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .timeline-toggle:hover { background: var(--green); color: #fff; }
+    .timeline-toggle svg { transition: transform 0.35s ease; }
+    .timeline-toggle.open svg { transform: rotate(180deg); }
+
     /* ─── 7. POLICY LANDSCAPE ───────────────────────────────────── */
     #policy {
       padding: var(--section-pad) 0;
@@ -1972,42 +2004,7 @@
 
     <div class="milestone-rows" id="milestone-rows">
 
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2005</div>
-          <div class="milestone-card-title">CDM Participation Begins</div>
-          <div class="milestone-card-desc">India joins the Clean Development Mechanism under the Kyoto Protocol, becoming one of the largest CDM credit suppliers globally. Projects in renewables, energy efficiency, and waste management generate Certified Emission Reductions (CERs).</div>
-        </div>
-      </div>
-
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2012</div>
-          <div class="milestone-card-title">PAT Scheme Launched</div>
-          <div class="milestone-card-desc">Bureau of Energy Efficiency launches the Perform Achieve &amp; Trade scheme — India's first domestic market-based energy efficiency mechanism. Designated Consumers in 8 industrial sectors receive specific energy consumption targets.</div>
-        </div>
-      </div>
-
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2022</div>
-          <div class="milestone-card-title">EC Act Amended — Carbon Markets Legalised</div>
-          <div class="milestone-card-desc">The Energy Conservation (Amendment) Act 2022 explicitly enables the establishment of a carbon market in India. This legislative change gave MoEF the authority to notify a Carbon Credit Trading Scheme.</div>
-        </div>
-      </div>
-
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card">
-          <div class="milestone-card-year">2023</div>
-          <div class="milestone-card-title">CCTS Notified</div>
-          <div class="milestone-card-desc">The Carbon Credit Trading Scheme is officially notified by MoEF. It establishes a compliance market (mandatory for Designated Consumers) and an offset market (voluntary). BEE is designated the administrator.</div>
-        </div>
-      </div>
-
+      <!-- "Now" always visible -->
       <div class="milestone-row">
         <div class="milestone-row-left"><div class="milestone-dot"></div></div>
         <div class="milestone-card" style="border-color: var(--green); background: #F4FAF7;">
@@ -2017,6 +2014,57 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- Toggle button -->
+    <button class="timeline-toggle" id="timeline-toggle" aria-expanded="false" aria-controls="milestone-history">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Show history
+    </button>
+
+    <!-- Collapsed history -->
+    <div class="milestone-history" id="milestone-history">
+      <div class="milestone-rows" style="padding-top: 4px;">
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2023</div>
+            <div class="milestone-card-title">CCTS Notified</div>
+            <div class="milestone-card-desc">The Carbon Credit Trading Scheme is officially notified by MoEF. It establishes a compliance market (mandatory for Designated Consumers) and an offset market (voluntary). BEE is designated the administrator.</div>
+          </div>
+        </div>
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2022</div>
+            <div class="milestone-card-title">EC Act Amended — Carbon Markets Legalised</div>
+            <div class="milestone-card-desc">The Energy Conservation (Amendment) Act 2022 explicitly enables the establishment of a carbon market in India. This legislative change gave MoEF the authority to notify a Carbon Credit Trading Scheme.</div>
+          </div>
+        </div>
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2012</div>
+            <div class="milestone-card-title">PAT Scheme Launched</div>
+            <div class="milestone-card-desc">Bureau of Energy Efficiency launches the Perform Achieve &amp; Trade scheme — India's first domestic market-based energy efficiency mechanism. Designated Consumers in 8 industrial sectors receive specific energy consumption targets.</div>
+          </div>
+        </div>
+
+        <div class="milestone-row revealed">
+          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+          <div class="milestone-card">
+            <div class="milestone-card-year">2005</div>
+            <div class="milestone-card-title">CDM Participation Begins</div>
+            <div class="milestone-card-desc">India joins the Clean Development Mechanism under the Kyoto Protocol, becoming one of the largest CDM credit suppliers globally. Projects in renewables, energy efficiency, and waste management generate Certified Emission Reductions (CERs).</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </section>
@@ -2390,6 +2438,20 @@ document.addEventListener('DOMContentLoaded', function () {
       window.scrollTo({ top: top, behavior: 'smooth' });
     });
   });
+
+  // Timeline toggle
+  const tlBtn = document.getElementById('timeline-toggle');
+  const tlHistory = document.getElementById('milestone-history');
+  if (tlBtn && tlHistory) {
+    tlBtn.addEventListener('click', () => {
+      const open = tlHistory.classList.toggle('expanded');
+      tlBtn.classList.toggle('open', open);
+      tlBtn.setAttribute('aria-expanded', open);
+      tlBtn.innerHTML = open
+        ? `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 9l5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Hide history`
+        : `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Show history`;
+    });
+  }
 
 });
 </script>
