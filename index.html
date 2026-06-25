@@ -442,12 +442,7 @@
       max-width: var(--max-w);
       margin: 0 auto;
       padding: var(--section-pad) var(--h-pad) 48px;
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
       border-bottom: 1px solid #E0E0E0;
-      flex-wrap: wrap;
-      gap: 12px;
     }
     .how-headline {
       font-size: clamp(36px, 4.5vw, 56px);
@@ -456,7 +451,14 @@
       letter-spacing: -0.5px;
       margin: 0;
     }
-    .how-header-note { font-size: 13px; color: #666; font-style: italic; }
+    .how-header-note { display: none; }
+    .how-header-intro {
+      font-size: 16px;
+      color: #444;
+      line-height: 1.7;
+      max-width: 100%;
+      margin: 12px 0 0;
+    }
     .how-header-intro { font-size: 14px; color: #555; line-height: 1.7; margin-top: 10px; max-width: 620px; }
 
     /* Sticky scroll outer — tall enough for N cards × 100vh */
@@ -1470,8 +1472,8 @@
   <div class="nav-inner">
     <a href="#" class="nav-logo" aria-label="Carbon Pulse home">✦ Carbon Pulse</a>
     <ul class="nav-links" role="list">
-      <li><a href="#how-it-works">How It Works</a></li>
-      <li><a href="#policy">Policy Tracker</a></li>
+      <li><a href="#news">News</a></li>
+      <li><a href="#policy">Policies</a></li>
       <li><a href="#global">Global Context</a></li>
     </ul>
     <div class="nav-ctas">
@@ -1484,8 +1486,8 @@
 </nav>
 
 <div class="nav-mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation">
-  <a href="#how-it-works">How It Works</a>
-  <a href="#policy">Policy Tracker</a>
+  <a href="#news">News</a>
+  <a href="#policy">Policies</a>
   <a href="#global">Global Context</a>
   <div class="nav-mobile-ctas">
     <a href="#compliance" class="btn-solid">Check Compliance</a>
@@ -1801,7 +1803,7 @@
 
       <div class="how-card active" data-index="0">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="ChatGPT%20Image%20Jun%2025%2C%202026%2C%2011_19_39%20AM.jpg" alt="" aria-hidden="true">
+          <img class="how-card-visual-img" src="step1.jpg" alt="" aria-hidden="true">
           <span class="how-card-visual-num">01</span>
         </div>
         <div class="how-card-text">
@@ -1813,7 +1815,7 @@
 
       <div class="how-card" data-index="1">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="Gemini_Generated_Image_99bjoc99bjoc99bj.jpg" alt="" aria-hidden="true">
+          <img class="how-card-visual-img" src="step2.jpg" alt="" aria-hidden="true">
           <span class="how-card-visual-num">02</span>
         </div>
         <div class="how-card-text">
@@ -1825,7 +1827,7 @@
 
       <div class="how-card" data-index="2">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="Gemini_Generated_Image_vltubgvltubgvltu.jpg" alt="" aria-hidden="true">
+          <img class="how-card-visual-img" src="step3.jpg" alt="" aria-hidden="true">
           <span class="how-card-visual-num">03</span>
         </div>
         <div class="how-card-text">
@@ -1962,7 +1964,7 @@
   <div class="compliance-inner">
     <div class="compliance-left">
       <h2 class="section-heading" id="compliance-heading-label" style="color:#fff;">Compliance Check</h2>
-      <p class="section-subheading">Does this affect your business?</p>
+      <p class="section-subheading" style="color:#fff;">Does this affect your business?</p>
       <p class="compliance-sub">Check your exposure to PAT, CCTS, and the EU Carbon Border Tax in three steps.</p>
     </div>
 
