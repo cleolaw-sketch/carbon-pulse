@@ -433,7 +433,13 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .how-header .section-label { color: var(--green); }
+    .how-headline {
+      font-size: clamp(36px, 4.5vw, 56px);
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.5px;
+      margin: 0;
+    }
     .how-header-note { font-size: 13px; color: #666; font-style: italic; }
 
     /* Sticky scroll outer — tall enough for N cards × 100vh */
@@ -579,7 +585,7 @@
       display: block;
     }
     .legal-headline {
-      font-size: 48px;
+      font-size: clamp(42px, 5vw, 64px);
       font-weight: 700;
       color: #0A0A0A;
       line-height: 1.05;
@@ -683,7 +689,7 @@
     }
     .evolution-header { margin-bottom: 56px; }
     .evolution-heading {
-      font-size: 36px;
+      font-size: clamp(36px, 4.5vw, 56px);
       font-weight: 700;
       color: #0A0A0A;
       letter-spacing: -0.5px;
@@ -811,7 +817,7 @@
     }
     .policy-header { margin-bottom: 40px; }
     .policy-heading {
-      font-size: 36px;
+      font-size: clamp(36px, 4.5vw, 56px);
       font-weight: 700;
       color: #0A0A0A;
       letter-spacing: -0.5px;
@@ -1767,7 +1773,7 @@
 <section id="how-it-works" aria-labelledby="how-heading">
 
   <div class="how-header">
-    <span class="section-label" id="how-heading">How the market works</span>
+    <h2 class="how-headline" id="how-heading">How the market works</h2>
     <span class="how-header-note">India's Carbon Credit Trading Scheme — the mechanics</span>
   </div>
 
