@@ -1,0 +1,93 @@
+/* Hallmark · redesign tokens · Carbon Pulse
+ * macrostructure: Long Document (editorial scroll) · genre: modern-minimal × editorial
+ * theme: custom · paper warm-neutral (light) · display roman-serif · accent chromatic-green
+ * tone: authoritative · data-forward · institutional editorial (FT/Bloomberg school)
+ * Portable design system. Imported by index.html; reference by name only — never inline raw values.
+ */
+:root {
+  /* ─── INK / PAPER — warm-neutral editorial ground ─────────────── */
+  --ink:        oklch(16% 0.004 250);   /* ~#0E0F10  primary text, dark surfaces      */
+  --ink-2:      oklch(34% 0.006 250);   /* ~#3D3F41  body copy                        */
+  --ink-3:      oklch(46% 0.006 250);   /* ~#5C5E60  secondary / captions            */
+  --ink-4:      oklch(58% 0.006 250);   /* ~#7C7E80  muted / meta                     */
+  --paper:      oklch(96% 0.006 92);    /* ~#F4F2EC  warm off-white ground            */
+  --paper-2:    oklch(99% 0.004 92);    /* ~#FEFDFA  raised cards                     */
+  --paper-3:    oklch(93.5% 0.007 92);  /* ~#EBE9E1  sunken fills                     */
+  --white:      #FFFFFF;
+
+  /* ─── BRAND GREEN — data & forward momentum ───────────────────── */
+  --green:      oklch(38% 0.072 158);   /* ~#174D38  anchor                          */
+  --green-deep: oklch(31% 0.058 158);   /* ~#0F3828  deep panel                      */
+  --green-700:  oklch(45% 0.088 158);   /* ~#1E6849  hover / active                  */
+  --green-tint: oklch(95% 0.022 158);   /* ~#EAF4EE  light fill                      */
+  --green-line: oklch(86% 0.03 158);    /* ~#CFE3D6  green hairline                  */
+  --mint:       oklch(78% 0.082 162);   /* ~#6BBFA0  accent on dark                  */
+  --mint-2:     oklch(72% 0.06 162);    /* ~#7FB4A1  mint-light                      */
+  --mint-pale:  oklch(84% 0.045 162);   /* ~#A8C8B8  pale mint                       */
+
+  /* ─── MAROON — urgency & institutional labels ─────────────────── */
+  --maroon:     oklch(33% 0.088 25);    /* ~#4D1717  anchor                          */
+  --maroon-2:   oklch(46% 0.13 28);     /* ~#7A2A26  brighter maroon                 */
+
+  /* ─── GOLD — single reserved accent (CBAM stat only) ──────────── */
+  --gold:       oklch(82% 0.125 86);    /* ~#E8C25A  earned highlight                */
+
+  /* ─── SIGNAL — status semantics ───────────────────────────────── */
+  --signal-ok:    oklch(70% 0.17 150);  /* active green                              */
+  --signal-warn:  oklch(76% 0.15 72);   /* amber — approaching                       */
+  --signal-alert: oklch(66% 0.2 27);    /* red — obligated                           */
+  --policy-blue:  oklch(45% 0.12 245);  /* programme / body tags                     */
+
+  /* ─── HAIRLINES ───────────────────────────────────────────────── */
+  --line:    oklch(89% 0.005 92);       /* ~#E2E0DA  default divider                 */
+  --line-2:  oklch(83% 0.006 92);       /* ~#CFCDC6  stronger divider                */
+  --line-dk: oklch(28% 0.004 250);      /* divider on dark surfaces                  */
+
+  /* ─── TYPE ────────────────────────────────────────────────────── */
+  --font-display: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  --text-display:   clamp(3rem, 6vw, 4.75rem);    /* hero                            */
+  --text-display-s: clamp(2.25rem, 4.6vw, 3.5rem);/* section heads                   */
+  --text-4xl:       clamp(1.9rem, 3.4vw, 2.75rem);
+  --text-3xl:       clamp(1.5rem, 2.6vw, 2rem);
+  --text-2xl:       1.5rem;
+  --text-xl:        1.25rem;
+  --text-lg:        1.0625rem;
+  --text-md:        0.9375rem;
+  --text-sm:        0.8125rem;
+  --text-xs:        0.6875rem;
+
+  /* ─── SPACE — 4pt scale ───────────────────────────────────────── */
+  --space-2xs: 4px;
+  --space-xs:  8px;
+  --space-sm:  12px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --section-pad: 104px;
+  --h-pad: 64px;
+  --max-w: 1240px;
+
+  /* ─── RADII ───────────────────────────────────────────────────── */
+  --radius-card: 14px;
+  --radius-tag:  8px;
+  --radius-pill: 100px;
+
+  /* ─── DEPTH — restrained, green-tinted shadows ────────────────── */
+  --shadow-sm: 0 1px 2px rgba(20,33,26,0.05), 0 1px 3px rgba(20,33,26,0.05);
+  --shadow-md: 0 6px 16px rgba(20,33,26,0.07), 0 2px 5px rgba(20,33,26,0.05);
+  --shadow-lg: 0 18px 40px rgba(20,33,26,0.12), 0 6px 12px rgba(20,33,26,0.06);
+  --shadow-dk: 0 20px 50px rgba(0,0,0,0.45);
+
+  /* ─── MOTION ──────────────────────────────────────────────────── */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.18s;
+  --dur-mid:  0.34s;
+  --dur-slow: 0.55s;
+}
