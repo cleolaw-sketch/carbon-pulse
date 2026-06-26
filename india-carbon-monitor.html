@@ -485,7 +485,7 @@
     #compliance::before { content: ''; position: absolute; top: -20%; right: -10%; width: 50%; height: 70%; background: radial-gradient(circle, rgba(23,77,56,0.55), transparent 70%); pointer-events: none; }
     .compliance-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); display: grid; grid-template-columns: 40% 60%; gap: 64px; align-items: start; position: relative; z-index: 1; }
     .compliance-left .eyebrow { color: var(--mint); display: block; margin-bottom: 18px; }
-    .compliance-headline { font-family: var(--font-display); font-size: var(--text-display-s); font-weight: 500; color: #fff; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .compliance-headline { font-family: var(--font-display); font-size: clamp(1.8rem, 2.8vw, 2.4rem); font-weight: 500; color: #fff; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 8px; white-space: nowrap; }
     .compliance-left .section-subheading { color: rgba(255,255,255,0.85); }
     .compliance-sub { font-size: var(--text-md); color: rgba(255,255,255,0.6); line-height: 1.7; }
     .compliance-right { display: flex; flex-direction: column; gap: 14px; }
