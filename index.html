@@ -2,1557 +2,694 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <script>document.documentElement.classList.add('js');</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Carbon Pulse — India's Carbon Market Intelligence</title>
+  <meta name="description" content="Carbon Pulse — India's carbon market intelligence platform. Understand every rule, deadline, and market signal shaping India's carbon economy: CCTS, PAT, the EU carbon border tax (CBAM), and compliance across 9 hard-to-abate sectors." />
+  <meta name="theme-color" content="#174D38" />
+  <link rel="canonical" href="https://cleolaw-sketch.github.io/carbon-pulse/" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+
+  <!-- Social -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Carbon Pulse — India's Carbon Market Intelligence" />
+  <meta property="og:description" content="One platform to understand every rule, deadline, and market signal shaping India's carbon economy." />
+  <meta property="og:url" content="https://cleolaw-sketch.github.io/carbon-pulse/" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1756093158082-37e567772896?w=1200&auto=format&fit=crop&q=80" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet" />
+
+  <!-- Hero image preload -->
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1756093158082-37e567772896?w=1600&auto=format&fit=crop&q=80" />
+
+  <!-- Design tokens (portable system) -->
+  <link rel="stylesheet" href="tokens.css" />
+
   <!-- Chart.js loaded without defer so it is available at DOMContentLoaded -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"
+          integrity="sha512-SIMGYRUjwY8+gKg7nn9EItdD8LCADSDfJNutF9TPrvEo86sQmFMh6MyralfIyhADlajSxqc7G0gs7+MwWF/ogQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
   <style>
+    /* Hallmark · redesign · macrostructure: Long Document (editorial scroll) · tone: institutional-editorial · anchor hue: green
+     * pre-emit critique: P5 H5 E5 S5 R4 V4
+     * type: Newsreader (display) + Inter (body/UI) + IBM Plex Mono (labels) · paper: warm-neutral · accent: green + reserved gold
+     * tokens: tokens.css (imported) — reference tokens by name only
+     */
+
     /* ─── RESET & BASE ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      scroll-padding-top: 88px;
+      -webkit-text-size-adjust: 100%;
+      overflow-x: clip;
+    }
     body {
-      font-family: 'Inter', sans-serif;
-      background: #F2F2F2;
-      color: #0A0A0A;
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.6;
       -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: clip;
     }
+    img { max-width: 100%; display: block; }
     a { text-decoration: none; color: inherit; }
-    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    h1, h2, h3 { overflow-wrap: anywhere; min-width: 0; }
+    ::selection { background: var(--green); color: #fff; }
 
-    /* ─── TOKENS ───────────────────────────────────────────────── */
-    :root {
-      --bg: #F2F2F2;
-      --black: #0A0A0A;
-      --green: #174D38;
-      --maroon: #4D1717;
-      --white: #FFFFFF;
-      --mint: #6BBFA0;
-      --mint-light: #8BBFAA;
-      --mint-pale: #A8C8B8;
-      --gold: #FFFFFF;
-      --radius-card: 12px;
-      --radius-tag: 8px;
-      --radius-pill: 100px;
-      --section-pad: 80px;
-      --h-pad: 64px;
-      --max-w: 1280px;
-    }
+    /* Focus — visible, instant, never animated */
+    :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+    #compliance :focus-visible,
+    #global :focus-visible,
+    #footer :focus-visible,
+    .nav-mobile-menu :focus-visible,
+    #hero :focus-visible { outline-color: var(--mint); }
 
-    /* ─── LAYOUT HELPERS ────────────────────────────────────────── */
-    .container {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
+    /* Skip link */
+    .skip-link {
+      position: absolute; left: 16px; top: -64px;
+      background: var(--ink); color: #fff;
+      padding: 10px 18px; border-radius: 8px;
+      z-index: 2000; font-size: 14px; font-weight: 600;
+      transition: top var(--dur-fast) var(--ease-out);
     }
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 3px;
+    .skip-link:focus { top: 16px; }
+
+    /* ─── PRIMITIVES ───────────────────────────────────────────── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); }
+
+    /* Grid blowout guard — let grid/flex items shrink below content min-content */
+    .paradox-body > *, .legal-inner > *, .global-inner > *, .compliance-inner > *,
+    .news-grid > *, .stats-inner > *, .how-card > *, .evolution-inner > * { min-width: 0; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       font-weight: 500;
     }
     .section-heading {
-      font-size: clamp(32px, 4vw, 52px);
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      line-height: 1.15;
-      margin: 0 0 8px;
-      color: #0A0A0A;
+      font-family: var(--font-display);
+      font-size: var(--text-display-s);
+      font-weight: 500;
+      letter-spacing: -0.018em;
+      line-height: 1.06;
+      color: var(--ink);
+      margin: 0;
+      text-wrap: balance;
     }
     .section-subheading {
-      font-size: clamp(20px, 2.4vw, 30px);
-      font-weight: 600;
-      letter-spacing: -0.3px;
-      line-height: 1.25;
-      margin: 0 0 16px;
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: -0.01em;
+      line-height: 1.18;
       color: inherit;
+      margin: 0 0 var(--space-md);
     }
 
-    /* ─── 1. NAV ────────────────────────────────────────────────── */
+    /* Buttons — shared voice */
+    .btn {
+      display: inline-flex; align-items: center; gap: 9px;
+      border-radius: var(--radius-pill);
+      font-weight: 600; font-size: var(--text-sm);
+      line-height: 1; white-space: nowrap;
+      transition: transform var(--dur-fast) var(--ease-out),
+                  background var(--dur-fast) var(--ease-out),
+                  color var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .btn .arrow { transition: transform var(--dur-mid) var(--ease-out); display: inline-block; }
+    .btn:hover .arrow { transform: translateX(4px); }
+    .btn:active { transform: translateY(1px); }
+
+    /* Inline read-more links with nudging arrow */
+    .arrow-link { display: inline-flex; align-items: center; gap: 6px; transition: color var(--dur-fast) var(--ease-out); }
+    .arrow-link .arrow { transition: transform var(--dur-mid) var(--ease-out); display: inline-block; }
+    .arrow-link:hover .arrow { transform: translateX(4px); }
+
+    /* Scroll-reveal (JS-gated so no-JS shows everything) */
+    .js [data-reveal] {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+    }
+    .js [data-reveal].revealed { opacity: 1; transform: none; }
+
+    /* ─── 1. NAV ───────────────────────────────────────────────── */
     #nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 68px;
-      background: #F2F2F2;
-      border-bottom: 1px solid #E0E0E0;
-      z-index: 1000;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 68px; z-index: 1000;
+      background: color-mix(in oklab, var(--paper) 80%, transparent);
+      backdrop-filter: saturate(150%) blur(12px);
+      -webkit-backdrop-filter: saturate(150%) blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: background var(--dur-mid) var(--ease-out), border-color var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid) var(--ease-out);
     }
     #nav.scrolled {
-      background: #FFFFFF;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      background: color-mix(in oklab, var(--paper-2) 88%, transparent);
+      border-bottom-color: var(--line);
+      box-shadow: var(--shadow-sm);
     }
     .nav-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-      height: 100%;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      align-items: center;
-    }
-    .nav-ctas {
-      justify-self: end;
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 0 var(--h-pad); height: 100%;
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
     }
     .nav-logo {
-      font-weight: 700;
-      font-size: 16px;
-      color: #0A0A0A;
-      letter-spacing: -0.3px;
-      white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 9px;
+      font-weight: 700; font-size: 16px; color: var(--ink);
+      letter-spacing: -0.02em; white-space: nowrap;
     }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
+    .nav-logo .pulse-mark {
+      width: 22px; height: 22px; flex-shrink: 0;
+      display: grid; place-items: center;
+      background: var(--green); border-radius: 6px;
     }
+    .nav-logo .pulse-mark svg { width: 15px; height: 15px; display: block; }
+    .nav-links { display: flex; gap: 34px; list-style: none; }
     .nav-links a {
-      font-size: 14px;
-      color: #666;
-      transition: color 0.2s ease;
+      position: relative;
+      font-size: 14px; font-weight: 500; color: var(--ink-3);
+      padding: 4px 0;
+      transition: color var(--dur-fast) var(--ease-out);
     }
-    .nav-links a:hover { color: #0A0A0A; }
-    .nav-ctas {
-      display: flex;
-      gap: 10px;
-      align-items: center;
+    .nav-links a::after {
+      content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 1.5px;
+      background: var(--green); transform: scaleX(0); transform-origin: left;
+      transition: transform var(--dur-mid) var(--ease-out);
     }
-    .btn-outline {
-      padding: 8px 18px;
-      border: 1px solid #0A0A0A;
-      border-radius: var(--radius-pill);
-      background: transparent;
-      color: #0A0A0A;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      display: inline-block;
-    }
-    .btn-outline:hover { background: #0A0A0A; color: #FFF; }
-    .btn-solid {
-      padding: 8px 18px;
-      border: 1px solid #0A0A0A;
-      border-radius: var(--radius-pill);
-      background: #0A0A0A;
-      color: #FFFFFF;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      display: inline-block;
-    }
-    .btn-solid:hover { background: #2A2A2A; }
+    .nav-links a:hover, .nav-links a.active { color: var(--ink); }
+    .nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+    .nav-ctas { justify-self: end; display: flex; gap: 10px; align-items: center; }
 
-    /* Hamburger */
+    .btn-solid {
+      padding: 9px 18px;
+      border: 1px solid var(--ink); background: var(--ink); color: var(--paper-2);
+    }
+    .btn-solid:hover { background: var(--green); border-color: var(--green); box-shadow: var(--shadow-md); }
+
+    /* Hamburger → X */
     .nav-hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-      background: none;
-      border: none;
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 8px; background: none; border: none;
     }
     .nav-hamburger span {
-      display: block;
-      width: 22px;
-      height: 2px;
-      background: #0A0A0A;
-      border-radius: 2px;
-      transition: all 0.2s ease;
+      display: block; width: 22px; height: 2px; background: var(--ink); border-radius: 2px;
+      transition: transform var(--dur-mid) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
     }
-    .nav-mobile-menu {
-      display: none;
-      position: fixed;
-      top: 68px; left: 0; right: 0;
-      background: #FFF;
-      border-bottom: 1px solid #E0E0E0;
-      padding: 20px var(--h-pad);
-      z-index: 999;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .nav-mobile-menu.open { display: flex; }
-    .nav-mobile-menu a {
-      font-size: 15px;
-      color: #0A0A0A;
-      font-weight: 500;
-    }
-    .nav-mobile-ctas {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
-    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ─── 2. HERO ───────────────────────────────────────────────── */
+    .nav-mobile-menu {
+      position: fixed; top: 68px; left: 0; right: 0;
+      background: var(--paper-2); border-bottom: 1px solid var(--line);
+      padding: 20px var(--h-pad) 28px; z-index: 999;
+      display: flex; flex-direction: column; gap: 18px;
+      transform: translateY(-12px); opacity: 0; pointer-events: none; visibility: hidden;
+      box-shadow: var(--shadow-md);
+      transition: opacity var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out), visibility var(--dur-mid);
+    }
+    .nav-mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; visibility: visible; }
+    .nav-mobile-menu a { font-size: 16px; color: var(--ink); font-weight: 500; }
+    .nav-mobile-ctas { display: flex; gap: 10px; margin-top: 6px; }
+
+    /* ─── 2. HERO ──────────────────────────────────────────────── */
     #hero {
       min-height: 100vh;
       background-color: #080e0a;
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
+      position: relative; display: flex; align-items: center; overflow: hidden;
     }
-    /* Photo background */
     #hero-bg-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 30%;
-      pointer-events: none;
-      z-index: 0;
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 30%;
+      pointer-events: none; z-index: 0;
+      transform: scale(1.06);
+      animation: heroDrift 24s var(--ease-in-out) infinite alternate;
     }
-    /* Dark overlay — bottom heavy so text is always readable */
+    @keyframes heroDrift { to { transform: scale(1.12) translateY(-1.5%); } }
     #hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
+      content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
       background:
-        linear-gradient(to top, rgba(4,12,7,0.96) 0%, rgba(4,12,7,0.72) 40%, rgba(4,12,7,0.35) 75%, rgba(4,12,7,0.15) 100%),
-        linear-gradient(to right, rgba(4,12,7,0.6) 0%, transparent 60%);
-      pointer-events: none;
-      z-index: 1;
+        radial-gradient(120% 80% at 15% 110%, rgba(15,56,40,0.78) 0%, transparent 60%),
+        linear-gradient(to top, rgba(4,12,7,0.97) 0%, rgba(4,12,7,0.72) 38%, rgba(4,12,7,0.32) 74%, rgba(4,12,7,0.12) 100%),
+        linear-gradient(to right, rgba(4,12,7,0.7) 0%, transparent 62%);
     }
-    /* SVG hidden — replaced by photo */
+    /* Film grain — premium tactile */
+    #hero::after {
+      content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+      opacity: 0.5; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+    }
     #hero-bg-svg { display: none; }
     .hero-content {
-      position: relative;
-      z-index: 3;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-      padding-top: 68px;
-      width: 100%;
+      position: relative; z-index: 3;
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 92px var(--h-pad) 0; width: 100%;
     }
     .hero-label {
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: var(--mint);
-      font-family: 'Courier New', monospace;
-      font-weight: 500;
-      margin-bottom: 28px;
+      color: var(--mint); margin-bottom: 26px;
+      display: inline-flex; align-items: center; gap: 10px;
+    }
+    .hero-label::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--mint); box-shadow: 0 0 0 0 var(--mint);
+      animation: livePulse 2.6s var(--ease-out) infinite;
+    }
+    @keyframes livePulse {
+      0% { box-shadow: 0 0 0 0 rgba(107,191,160,0.6); }
+      70%, 100% { box-shadow: 0 0 0 9px rgba(107,191,160,0); }
     }
     .hero-headline {
-      font-size: clamp(48px, 6vw, 72px);
-      font-weight: 800;
-      color: #FFFFFF;
-      line-height: 1.05;
-      letter-spacing: -1.5px;
-      max-width: 720px;
+      font-family: var(--font-display);
+      font-size: var(--text-display);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      max-width: 16ch;
+      text-wrap: balance;
     }
+    .hero-headline em { font-style: italic; color: var(--mint); }
     .hero-sub {
-      font-size: 18px;
-      color: #999;
-      max-width: 540px;
-      margin-top: 24px;
-      line-height: 1.65;
-      font-weight: 400;
+      font-family: var(--font-body);
+      font-size: var(--text-lg);
+      color: rgba(255,255,255,0.74);
+      max-width: 50ch; margin-top: 24px; line-height: 1.62; font-weight: 400;
     }
-    .hero-ctas {
-      display: flex;
-      gap: 12px;
-      margin-top: 40px;
-      flex-wrap: wrap;
-    }
+    .hero-ctas { display: flex; gap: 12px; margin-top: 38px; flex-wrap: wrap; }
     .hero-btn-white {
-      padding: 14px 28px;
-      border-radius: var(--radius-pill);
-      background: #FFFFFF;
-      color: #0A0A0A;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      border: 1px solid #FFFFFF;
-      display: inline-block;
+      padding: 15px 28px;
+      background: #fff; color: var(--ink); border: 1px solid #fff;
     }
-    .hero-btn-white:hover { background: #E8E8E8; }
+    .hero-btn-white:hover { background: var(--paper); box-shadow: 0 8px 28px rgba(0,0,0,0.3); transform: translateY(-2px); }
     .hero-btn-green {
-      padding: 14px 28px;
-      border-radius: var(--radius-pill);
-      background: var(--green);
-      color: #FFFFFF;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.2s ease;
-      border: 1px solid var(--green);
-      display: inline-block;
+      padding: 15px 28px;
+      background: var(--green); color: #fff; border: 1px solid color-mix(in oklab, var(--mint) 40%, var(--green));
     }
-    .hero-btn-green:hover { background: #1e6849; }
+    .hero-btn-green:hover { background: var(--green-700); box-shadow: 0 8px 28px rgba(15,56,40,0.5); transform: translateY(-2px); }
     .hero-scroll-indicator {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 2;
-      color: #444;
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      transition: opacity 0.3s ease;
+      position: absolute; bottom: 34px; left: 50%; transform: translateX(-50%); z-index: 3;
+      color: rgba(255,255,255,0.55); font-family: var(--font-mono);
+      font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      transition: opacity var(--dur-mid) var(--ease-out);
     }
     .hero-scroll-indicator::after {
-      content: '';
-      display: block;
-      width: 1px;
-      height: 28px;
-      background: linear-gradient(to bottom, #444, transparent);
+      content: ''; width: 1px; height: 30px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+      animation: scrollNudge 2s var(--ease-in-out) infinite;
+      transform-origin: top;
     }
+    @keyframes scrollNudge { 0%,100% { transform: scaleY(0.4); opacity: 0.4; } 50% { transform: scaleY(1); opacity: 1; } }
 
-    /* ─── 3. STATS BAR ──────────────────────────────────────────── */
-    #stats-bar {
-      background: #FFFFFF;
-      border-bottom: 1px solid #E8E8E8;
-    }
+    /* ─── 3. STATS BAR ─────────────────────────────────────────── */
+    #stats-bar { background: var(--paper-2); border-bottom: 1px solid var(--line); position: relative; }
+    #stats-bar::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--green); }
     .stats-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-      display: flex;
-      align-items: stretch;
-      height: 88px;
+      max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad);
+      display: flex; align-items: stretch; min-height: 96px;
     }
     .stat-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      padding: 0 16px;
-      border-right: 1px solid #E8E8E8;
+      flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 7px; padding: 18px 16px; border-right: 1px solid var(--line);
+      transition: background var(--dur-fast) var(--ease-out);
     }
     .stat-item:last-child { border-right: none; }
+    .stat-item:hover { background: var(--green-tint); }
     .stat-value {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--green);
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
+      font-family: var(--font-body); font-size: 26px; font-weight: 700; color: var(--green);
+      line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
     }
     .stat-label {
-      font-size: 10px;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      text-align: center;
-      font-weight: 500;
+      font-family: var(--font-mono); font-size: 10px; color: var(--ink-3);
+      text-transform: uppercase; letter-spacing: 0.12em; text-align: center; font-weight: 500; line-height: 1.4;
     }
 
-    /* ─── 4. CARBON PARADOX ─────────────────────────────────────── */
-    #paradox {
-      padding: var(--section-pad) 0;
-      background: var(--bg);
-    }
-    .paradox-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-    }
-    .paradox-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 48px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #E0E0E0;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .paradox-header .section-label { color: var(--maroon); }
-    .paradox-header-note {
-      font-size: 13px;
-      color: #666;
-      font-style: italic;
-    }
-    .paradox-body {
-      display: grid;
-      grid-template-columns: 38% 1fr;
-      gap: 72px;
-      align-items: start;
-    }
-    .paradox-left {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-    }
-    .paradox-callout {
-      display: flex;
-      align-items: baseline;
-      gap: 14px;
-      padding: 20px 0;
-      border-bottom: 1px solid #E8E8E8;
-    }
-    .paradox-callout:first-child { padding-top: 0; }
-    .paradox-num {
-      font-size: clamp(40px, 4vw, 52px);
-      font-weight: 800;
-      color: var(--green);
-      line-height: 1;
-      letter-spacing: -1.5px;
-      flex-shrink: 0;
-    }
-    .paradox-callout-text { }
-    .paradox-callout-label {
-      font-size: 15px;
-      font-weight: 600;
-      color: #0A0A0A;
-      line-height: 1.3;
-      margin-bottom: 2px;
-    }
-    .paradox-callout-sub {
-      font-size: 12px;
-      color: #666;
-      line-height: 1.4;
-    }
-    .paradox-text {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.8;
-      margin-top: 28px;
-    }
-    .paradox-right { }
-    .isotype-chart {
-      width: 100%;
-      display: block;
-    }
-    .isotype-caption {
-      font-size: 11px;
-      color: #666;
-      font-style: italic;
-      margin-top: 12px;
-      text-align: center;
-    }
-
-    /* ─── 4b. HOW IT WORKS ──────────────────────────────────────── */
-    #how-it-works {
-      background: #FFFFFF;
-    }
-    .how-header {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: var(--section-pad) var(--h-pad) 48px;
-      border-bottom: 1px solid #E0E0E0;
-    }
-    .how-headline {
-      font-size: clamp(36px, 4.5vw, 56px);
-      font-weight: 700;
-      color: var(--green);
-      letter-spacing: -0.5px;
-      margin: 0;
-    }
-    .how-header-note { display: none; }
-    .how-header-intro {
-      font-size: 16px;
-      color: #444;
-      line-height: 1.7;
-      max-width: 100%;
-      margin: 12px 0 0;
-    }
-    .how-header-intro { font-size: 14px; color: #555; line-height: 1.7; margin-top: 10px; max-width: 620px; }
-
-    /* Sticky scroll outer — tall enough for N cards × 100vh */
-    .how-sticky-outer {
-      position: relative;
-      height: calc(5 * 100vh);
-    }
-    .how-sticky-inner {
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .how-card {
-      position: absolute;
-      inset: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      opacity: 0;
-      transition: opacity 0.45s ease;
-      pointer-events: none;
-    }
-    .how-card.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .how-card-visual {
-      background: var(--green);
-      display: flex;
-      align-items: flex-end;
-      padding: 48px;
-      position: relative;
-      overflow: hidden;
-    }
-    .how-card-visual-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.5;
-    }
-    .how-card-visual-num {
-      font-size: clamp(120px, 18vw, 200px);
-      font-weight: 800;
-      color: rgba(255,255,255,0.1);
-      line-height: 1;
-      letter-spacing: -6px;
-      position: absolute;
-      bottom: 24px;
-      right: 32px;
-      pointer-events: none;
-      user-select: none;
-    }
-    .how-card-visual-tag {
-      position: relative;
-      z-index: 1;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--mint);
-      background: rgba(0,0,0,0.25);
-      padding: 5px 14px;
-      border-radius: var(--radius-pill);
-    }
-    .how-card-text {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 64px 72px;
-      background: #FFFFFF;
-    }
-    .how-card-step {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 16px;
-    }
-    .how-card-title {
-      font-size: clamp(28px, 3.2vw, 40px);
-      font-weight: 700;
-      color: #0A0A0A;
-      line-height: 1.15;
-      letter-spacing: -0.5px;
-      margin-bottom: 20px;
-    }
-    .how-card-desc {
-      font-size: 16px;
-      color: #555;
-      line-height: 1.8;
-      max-width: 480px;
-    }
-    /* Progress dots */
-    .how-progress {
-      position: absolute;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 10;
-    }
-    .how-prog-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #CCC;
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-    .how-prog-dot.active {
-      background: var(--green);
-      transform: scale(1.4);
-    }
-    @media (max-width: 768px) {
-      .how-card { grid-template-columns: 1fr; }
-      .how-card-visual { display: none; }
-      .how-card-text { padding: 40px 28px; justify-content: flex-start; padding-top: 80px; }
-    }
-
-    /* ─── 5. LEGAL ARCHITECTURE ──────────────────────────────────── */
-    #legal {
-      padding: var(--section-pad) 0;
-      background: var(--bg);
-    }
-    .legal-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-      display: grid;
-      grid-template-columns: 40% 60%;
-      gap: 80px;
-      align-items: start;
-    }
-    .legal-left {
-      position: sticky;
-      top: 100px;
-    }
-    .legal-left .section-label {
-      color: var(--green);
-      margin-bottom: 20px;
-      display: block;
-    }
-    .legal-headline {
-      font-size: clamp(42px, 5vw, 64px);
-      font-weight: 700;
-      color: #0A0A0A;
-      line-height: 1.05;
-      letter-spacing: -1px;
-      margin-bottom: 20px;
-    }
-    .legal-sub {
-      font-size: 15px;
-      color: #666;
-      line-height: 1.7;
-    }
-    .legal-sub-coda {
-      font-size: 13px;
-      color: #666;
-      font-style: italic;
-      margin: 0;
-    }
-    .legal-right {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .strata-card {
-      border-radius: var(--radius-card);
-      padding: 28px;
-      border: 1px solid transparent;
-      opacity: 0;
-      transform: translateY(32px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .strata-card.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .strata-card-layer {
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    .strata-card-title {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .strata-year-tag {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--green);
-      background: rgba(23,77,56,0.1);
-      padding: 3px 8px;
-      border-radius: var(--radius-tag);
-    }
-    .strata-sub {
-      font-size: 14px;
-      line-height: 1.65;
-      margin-bottom: 4px;
-    }
-    .strata-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .strata-pill {
-      font-size: 11px;
-      color: #555;
-      background: #FFFFFF;
-      border: 1px solid #C8D8CC;
-      border-radius: var(--radius-tag);
-      padding: 4px 10px;
-      font-weight: 500;
-    }
-    .strata-impl { background: #EBF5EF; border-color: #D0E8D8; }
-    .strata-impl .strata-card-layer { color: var(--green); }
-    .strata-impl .strata-card-title { color: #0A0A0A; }
-    .strata-impl .strata-sub { color: #555; }
-    .strata-framework { background: #F5F5F5; border-color: #E0E0E0; }
-    .strata-framework .strata-card-layer { color: #555; }
-    .strata-framework .strata-card-title { color: #0A0A0A; }
-    .strata-framework .strata-sub { color: #555; }
-    .strata-foundation { background: var(--green); border-color: #0F3828; }
-    .strata-foundation .strata-card-layer { color: var(--mint-light); }
-    .strata-foundation .strata-card-title { color: #FFFFFF; }
-    .strata-foundation .strata-sub { color: var(--mint-pale); }
-
-    /* ─── 6. EVOLUTION TIMELINE ─────────────────────────────────── */
-    #evolution {
-      padding: var(--section-pad) 0;
-      background: var(--bg);
-    }
-    .evolution-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-    }
-    .evolution-header { margin-bottom: 56px; }
-    .evolution-heading {
-      font-size: clamp(36px, 4.5vw, 56px);
-      font-weight: 700;
-      color: #0A0A0A;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-    }
-    .evolution-sub { font-size: 14px; color: #666; }
-
-    /* ── EVOLUTION TIMELINE — compact vertical ──────────────────── */
-    .milestone-rows {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      max-width: 600px;
-    }
-    /* The vertical line */
-    .milestone-rows::before {
-      content: '';
-      position: absolute;
-      left: 13px;
-      top: 6px;
-      bottom: 6px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--green) 0%, #CECECE 60%, #E8E8E8 100%);
-    }
-    .milestone-row {
-      display: grid;
-      grid-template-columns: 28px 1fr;
-      gap: 0 20px;
-      padding-bottom: 32px;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    .milestone-row:last-child { padding-bottom: 0; }
-    .milestone-row.revealed { opacity: 1; transform: translateY(0); }
-
-    /* Left column: dot only */
-    .milestone-row-left {
-      position: relative;
-      padding-top: 4px;
-    }
-    .milestone-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--green);
-      border: 3px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--green);
-      position: absolute;
-      left: 7px;
-      top: 4px;
-    }
-
-    /* Right column: compact card */
-    .milestone-card {
-      background: #FFFFFF;
-      border: 1px solid #E8E8E8;
-      border-radius: 10px;
-      padding: 14px 18px;
-    }
-    .milestone-card-year {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--green);
-      margin-bottom: 4px;
-    }
-    .milestone-card-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: #0A0A0A;
-      line-height: 1.3;
-      margin-bottom: 6px;
-    }
-    .milestone-card-desc {
-      font-size: 13px;
-      color: #555;
-      line-height: 1.75;
-    }
-    @media (max-width: 768px) {
-      .milestone-rows { max-width: 100%; }
-    }
-
-    /* ── TIMELINE COLLAPSE ──────────────────────────────────────── */
-    .milestone-history {
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
-      opacity: 0;
-    }
-    .milestone-history.expanded {
-      max-height: 1200px;
-      opacity: 1;
-    }
-    .timeline-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 12px;
-      margin-bottom: 28px;
-      background: none;
-      border: 1.5px solid var(--green);
-      color: var(--green);
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      padding: 7px 16px;
-      border-radius: 99px;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .timeline-toggle:hover { background: var(--green); color: #fff; }
-    .timeline-toggle svg { transition: transform 0.35s ease; }
-    .timeline-toggle.open svg { transform: rotate(180deg); }
-
-    /* ─── 7. POLICY LANDSCAPE ───────────────────────────────────── */
-    #policy {
-      padding: var(--section-pad) 0;
-      background: var(--bg);
-    }
-    .policy-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-    }
-    .policy-header { margin-bottom: 40px; }
-    .policy-heading {
-      font-size: clamp(36px, 4.5vw, 56px);
-      font-weight: 700;
-      color: #0A0A0A;
-      letter-spacing: -0.5px;
-      margin-bottom: 8px;
-    }
-    .policy-sub {
-      font-size: 15px;
-      color: #666;
-      max-width: 600px;
-      line-height: 1.6;
-    }
-    .filter-tabs {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-bottom: 32px;
-    }
-    .filter-tab {
-      padding: 7px 16px;
-      border-radius: var(--radius-pill);
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      border: 1px solid #D0D0D0;
-      background: transparent;
-      color: #444;
-      transition: all 0.2s ease;
-    }
-    .filter-tab:hover { border-color: #0A0A0A; color: #0A0A0A; }
-    .filter-tab.active {
-      background: #0A0A0A;
-      color: #FFFFFF;
-      border-color: #0A0A0A;
-    }
-    .policy-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      min-height: 460px;
-      align-content: start;
-    }
-    .policy-card {
-      background: #FFFFFF;
-      border: 1px solid #E8E8E8;
-      border-radius: var(--radius-card);
-      padding: 22px;
-      transition: box-shadow 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .policy-card:hover {
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
-    }
-    .policy-card.hidden {
-      opacity: 0;
-      transform: translateY(8px);
-      pointer-events: none;
-      display: none;
-    }
-    .policy-card-tag {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: var(--radius-tag);
-      margin-bottom: 14px;
-      color: #FFFFFF;
-    }
-    .tag-act { background: var(--green); }
-    .tag-scheme { background: var(--maroon); }
-    .tag-programme { background: #0A4070; }
-    .tag-body { background: #444; }
-    .policy-card-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #0A0A0A;
-      margin-bottom: 10px;
-      line-height: 1.3;
-    }
-    .policy-card-desc {
-      font-size: 13px;
-      color: #666;
-      line-height: 1.65;
-      margin-bottom: 16px;
-    }
-    .policy-card-status {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #666;
-      font-weight: 500;
-    }
-    .status-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #22C55E;
-      flex-shrink: 0;
-    }
-    .status-dot.pilot { background: #F59E0B; }
-    .status-dot.body { background: #3B82F6; }
-
-    /* ─── 8. COMPLIANCE CHECKER ─────────────────────────────────── */
-    #compliance {
-      padding: var(--section-pad) 0;
-      background: #0A0A0A;
-    }
-    .compliance-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-      display: grid;
-      grid-template-columns: 40% 60%;
-      gap: 64px;
-      align-items: start;
-    }
-    .compliance-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--mint);
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-    .compliance-headline {
-      font-size: 42px;
-      font-weight: 700;
-      color: #FFFFFF;
-      line-height: 1.1;
-      letter-spacing: -0.5px;
-      margin-bottom: 16px;
-    }
-    .compliance-sub {
-      font-size: 14px;
-      color: #888;
-      line-height: 1.7;
-    }
-    .compliance-right {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .checker-card {
-      background: #1A1A1A;
-      border: 1px solid #2A2A2A;
-      border-radius: var(--radius-card);
-      padding: 22px;
-    }
-    .checker-step {
-      font-size: 13px;
-      color: var(--mint);
-      font-weight: 600;
-      margin-bottom: 8px;
-      font-family: 'Courier New', monospace;
-    }
-    .checker-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 14px;
-    }
-    .checker-sub-text {
-      font-size: 12px;
-      color: #999;
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-    .sector-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .sector-chip {
-      padding: 6px 12px;
-      border: 1px solid #333;
-      border-radius: var(--radius-tag);
-      background: transparent;
-      color: #FFFFFF;
-      font-size: 12px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .sector-chip:hover { border-color: #555; }
-    .sector-chip.selected {
-      background: var(--green);
-      border-color: var(--green);
-    }
-    .dark-input {
-      width: 100%;
-      background: #111;
-      border: 1px solid #333;
-      border-radius: var(--radius-tag);
-      color: #FFFFFF;
-      font-family: inherit;
-      font-size: 15px;
-      padding: 10px 14px;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
-    .dark-input:focus { border-color: var(--mint); }
-    .dark-input::placeholder { color: #555; }
-    .obligation-result {
-      font-size: 14px;
-      line-height: 1.6;
-      padding: 4px 0;
-      min-height: 24px;
-    }
-    .result-obligated { color: #FF6B6B; font-weight: 600; }
-    .result-approaching { color: #F59E0B; font-weight: 600; }
-    .result-monitor { color: var(--mint); font-weight: 600; }
-    .result-empty { color: #444; font-weight: 400; font-size: 13px; }
-    .checker-cta {
-      display: inline-block;
-      margin-top: 14px;
-      padding: 10px 20px;
-      background: var(--green);
-      color: #FFFFFF;
-      font-size: 13px;
-      font-weight: 600;
-      border-radius: var(--radius-pill);
-      transition: all 0.2s ease;
-    }
-    .checker-cta:hover { background: #1e6849; }
-    .compliance-legend {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 4px;
-      padding-top: 16px;
-      border-top: 1px solid #1A1A1A;
-    }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 11px;
-      color: #999;
-    }
-    .legend-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .l-monitor { background: var(--mint); }
-    .l-approach { background: #F59E0B; }
-    .l-obligated { background: #FF6B6B; }
-
-    /* ─── 9. WHAT CHANGED THIS WEEK ─────────────────────────────── */
-    #news {
-      padding: var(--section-pad) 0;
-      background: #FFFFFF;
-    }
-    .news-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-    }
-    .news-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 6px;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .news-section-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--maroon);
-      font-weight: 600;
-    }
-    .news-all-link {
-      font-size: 13px;
-      color: var(--green);
-      font-weight: 500;
-    }
-    .news-all-link:hover { text-decoration: underline; }
-    .news-date-line {
-      font-size: 12px;
-      color: #666;
-      margin-bottom: 32px;
-    }
-    .news-grid {
-      display: grid;
-      grid-template-columns: 55% 45%;
-      gap: 40px;
-    }
-    .news-featured-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-    .inst-pill {
-      font-size: 11px;
-      font-weight: 700;
-      color: #FFF;
-      padding: 4px 10px;
-      border-radius: var(--radius-pill);
-      letter-spacing: 0.5px;
-    }
-    .inst-ccts { background: #0A4070; }
+    /* ─── 4. WHAT CHANGED THIS WEEK ────────────────────────────── */
+    #news { padding: var(--section-pad) 0; background: var(--paper-2); }
+    .news-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); }
+    .news-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px; flex-wrap: wrap; gap: 12px; }
+    .news-eyebrow { color: var(--maroon); }
+    .news-all-link { font-size: 13px; color: var(--green); font-weight: 600; }
+    .news-date-line { font-family: var(--font-mono); font-size: 12px; color: var(--ink-4); margin: 18px 0 36px; letter-spacing: 0.04em; }
+    .news-grid { display: grid; grid-template-columns: 55% 45%; gap: 48px; }
+    .news-featured-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+    .inst-pill { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: #fff; padding: 4px 11px; border-radius: var(--radius-pill); letter-spacing: 0.06em; }
+    .inst-ccts { background: var(--policy-blue); }
     .inst-bee  { background: var(--green); }
     .inst-moef { background: var(--maroon); }
-    .inst-cerc { background: #0A3050; }
-    .news-date { font-size: 12px; color: #999; }
-    .news-tag {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--maroon);
-      margin-bottom: 10px;
-    }
-    .news-featured-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: #0A0A0A;
-      line-height: 1.2;
-      margin-bottom: 14px;
-      letter-spacing: -0.3px;
-    }
-    .news-featured-summary {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.75;
-      margin-bottom: 16px;
-    }
+    .inst-cerc { background: color-mix(in oklab, var(--policy-blue) 70%, black); }
+    .news-date { font-size: 12px; color: var(--ink-4); }
+    .news-tag { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--maroon); margin-bottom: 12px; }
+    .news-featured-title { font-family: var(--font-display); font-size: var(--text-3xl); font-weight: 500; color: var(--ink); line-height: 1.14; margin-bottom: 16px; letter-spacing: -0.015em; }
+    .news-featured-summary { font-size: var(--text-md); color: var(--ink-2); line-height: 1.78; margin-bottom: 18px; }
     .news-read-link { font-size: 14px; color: var(--green); font-weight: 600; }
-    .news-read-link:hover { text-decoration: underline; }
     .news-sidebar { display: flex; flex-direction: column; }
     .news-story {
-      padding: 20px 0 20px 16px;
-      border-left: 2px solid #E8E8E8;
-      border-bottom: 1px solid #F0F0F0;
-      transition: border-left-color 0.2s ease;
+      padding: 20px 0 20px 18px; border-left: 2px solid var(--line);
+      border-bottom: 1px solid var(--line); transition: border-left-color var(--dur-mid) var(--ease-out), padding-left var(--dur-mid) var(--ease-out);
     }
+    .news-story:first-child { padding-top: 0; }
     .news-story:last-child { border-bottom: none; }
-    .news-story:hover { border-left-color: var(--green); }
-    .news-story-meta {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }
-    .news-story-type {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #666;
-    }
-    .news-story-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: #0A0A0A;
-      line-height: 1.35;
-      margin-bottom: 8px;
-    }
-    .news-story-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .news-story-date { font-size: 11px; color: #666; }
-    .news-story-link { font-size: 12px; color: var(--green); font-weight: 500; }
-    .news-story-link:hover { text-decoration: underline; }
+    .news-story:hover { border-left-color: var(--green); padding-left: 24px; }
+    .news-story-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 9px; flex-wrap: wrap; }
+    .news-story-type { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+    .news-story-title { font-size: var(--text-md); font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 10px; letter-spacing: -0.01em; }
+    .news-story-footer { display: flex; align-items: center; justify-content: space-between; }
+    .news-story-date { font-size: 11px; color: var(--ink-4); }
+    .news-story-link { font-size: 12px; color: var(--green); font-weight: 600; }
 
-    /* ─── 10. GLOBAL CONTEXT ────────────────────────────────────── */
-    #global {
-      padding: var(--section-pad) 0;
-      background: var(--green);
-      overflow: hidden;
+    /* ─── 5. CARBON PARADOX ────────────────────────────────────── */
+    #paradox { padding: var(--section-pad) 0; background: var(--paper); }
+    .paradox-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); }
+    .paradox-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 52px; padding-bottom: 22px; border-bottom: 1px solid var(--line-2); flex-wrap: wrap; gap: 12px; }
+    .paradox-header-note { font-family: var(--font-mono); font-size: 12px; color: var(--ink-3); letter-spacing: 0.03em; }
+    .paradox-body { display: grid; grid-template-columns: 40% 1fr; gap: 72px; align-items: center; }
+    .paradox-left { display: flex; flex-direction: column; }
+    .paradox-callout { display: flex; align-items: baseline; gap: 18px; padding: 24px 0; border-bottom: 1px solid var(--line); }
+    .paradox-callout:first-child { padding-top: 0; }
+    .paradox-num {
+      font-family: var(--font-display); font-size: clamp(3rem, 5vw, 4.25rem); font-weight: 500;
+      color: var(--green); line-height: 0.9; letter-spacing: -0.03em; flex-shrink: 0; font-variant-numeric: lining-nums;
     }
-    .global-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-      display: grid;
-      grid-template-columns: 45% 55%;
-      gap: 72px;
-      align-items: start;
+    .paradox-callout-label { font-size: var(--text-lg); font-weight: 600; color: var(--ink); line-height: 1.3; margin-bottom: 4px; }
+    .paradox-callout-sub { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+    .paradox-text { font-size: var(--text-lg); color: var(--ink-2); line-height: 1.8; margin-top: 30px; max-width: 46ch; }
+    .paradox-text strong { color: var(--ink); font-weight: 600; }
+    .isotype-chart { width: 100%; display: block; }
+    .isotype-caption { font-size: 11px; color: var(--ink-3); font-style: italic; margin-top: 14px; text-align: center; }
+
+    /* ─── 6. LEGAL ARCHITECTURE ────────────────────────────────── */
+    #legal { padding: var(--section-pad) 0; background: var(--paper); border-top: 1px solid var(--line); }
+    .legal-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); display: grid; grid-template-columns: 40% 60%; gap: 80px; align-items: start; }
+    .legal-left { position: sticky; top: 112px; }
+    .legal-left .eyebrow { color: var(--green); margin-bottom: 22px; display: block; }
+    .legal-headline { font-family: var(--font-display); font-size: var(--text-display-s); font-weight: 500; color: var(--ink); line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 20px; }
+    .legal-sub { font-size: var(--text-md); color: var(--ink-2); line-height: 1.78; }
+    .legal-right { display: flex; flex-direction: column; gap: 14px; position: relative; }
+    .strata-card {
+      border-radius: var(--radius-card); padding: 28px 30px; border: 1px solid var(--line);
+      background: var(--paper-2); box-shadow: var(--shadow-sm);
+      transition: transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid) var(--ease-out);
     }
-    .global-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      font-weight: 500;
-      margin-bottom: 16px;
+    .strata-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .strata-card-layer { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; font-weight: 500; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+    .strata-card-layer::before { content: ''; width: 22px; height: 1px; background: currentColor; opacity: 0.5; }
+    .strata-card-title { font-size: var(--text-xl); font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; letter-spacing: -0.01em; }
+    .strata-year-tag { font-family: var(--font-mono); font-size: 11px; font-weight: 500; color: var(--green); background: var(--green-tint); padding: 3px 9px; border-radius: var(--radius-tag); }
+    .strata-sub { font-size: var(--text-md); line-height: 1.7; }
+    .strata-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .strata-pill { font-family: var(--font-mono); font-size: 11px; color: var(--ink-2); background: var(--paper); border: 1px solid var(--green-line); border-radius: var(--radius-tag); padding: 5px 11px; font-weight: 400; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out); }
+    .strata-pill:hover { background: var(--green-tint); color: var(--green); }
+    .strata-impl { background: var(--green-tint); border-color: var(--green-line); }
+    .strata-impl .strata-card-layer { color: var(--green); }
+    .strata-impl .strata-sub { color: var(--ink-2); }
+    .strata-framework .strata-card-layer { color: var(--ink-3); }
+    .strata-framework .strata-sub { color: var(--ink-2); }
+    .strata-foundation { background: var(--green); border-color: var(--green-deep); box-shadow: var(--shadow-lg); }
+    .strata-foundation .strata-card-layer { color: var(--mint); }
+    .strata-foundation .strata-card-title { color: #fff; }
+    .strata-foundation .strata-card-title span { color: var(--mint-pale) !important; }
+    .strata-foundation .strata-sub { color: var(--mint-pale); }
+
+    /* ─── 7. HOW IT WORKS (sticky) ─────────────────────────────── */
+    #how-it-works { background: var(--ink); }
+    .how-header { max-width: var(--max-w); margin: 0 auto; padding: var(--section-pad) var(--h-pad) 52px; }
+    .how-header .eyebrow { color: var(--mint); display: block; margin-bottom: 18px; }
+    .how-headline { font-family: var(--font-display); font-size: var(--text-display-s); font-weight: 500; color: #fff; letter-spacing: -0.02em; margin: 0; line-height: 1.04; }
+    .how-header-intro { font-size: var(--text-md); color: rgba(255,255,255,0.6); line-height: 1.75; margin-top: 16px; max-width: 60ch; }
+    .how-sticky-outer { position: relative; height: calc(5 * 100vh); border-top: 1px solid var(--line-dk); }
+    .how-sticky-inner { position: sticky; top: 0; height: 100vh; overflow: hidden; background: var(--ink); }
+    .how-card { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; opacity: 0; transition: opacity var(--dur-slow) var(--ease-out); pointer-events: none; }
+    .how-card.active { opacity: 1; pointer-events: auto; }
+    .how-card-visual { background: var(--green-deep); display: flex; align-items: flex-end; padding: 52px; position: relative; overflow: hidden; }
+    .how-card-visual-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
+    .how-card-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,14,10,0.62) 0%, rgba(8,14,10,0.12) 50%, rgba(8,14,10,0.32) 100%); }
+    .how-card-visual-num { font-family: var(--font-display); font-size: clamp(120px, 18vw, 220px); font-weight: 500; color: rgba(255,255,255,0.12); line-height: 1; letter-spacing: -0.04em; position: absolute; bottom: 20px; right: 36px; z-index: 1; pointer-events: none; user-select: none; }
+    .how-card-visual-tag { position: relative; z-index: 2; font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mint); background: rgba(0,0,0,0.35); padding: 6px 14px; border-radius: var(--radius-pill); backdrop-filter: blur(4px); }
+    .how-card-text { display: flex; flex-direction: column; justify-content: center; padding: 64px clamp(32px, 6vw, 88px); background: var(--ink); }
+    .how-card-step { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mint); margin-bottom: 18px; }
+    .how-card-title { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 500; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 22px; }
+    .how-card-desc { font-size: var(--text-lg); color: rgba(255,255,255,0.66); line-height: 1.78; max-width: 50ch; }
+    .how-progress { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+    .how-prog-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.25); transition: background var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out), width var(--dur-mid) var(--ease-out); }
+    .how-prog-dot.active { background: var(--mint); width: 22px; border-radius: var(--radius-pill); }
+
+    /* ─── 8. POLICY LANDSCAPE ──────────────────────────────────── */
+    #policy { padding: var(--section-pad) 0; background: var(--paper); }
+    .policy-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); }
+    .policy-header { margin-bottom: 36px; }
+    .policy-header .eyebrow { color: var(--green); display: block; margin-bottom: 16px; }
+    .policy-heading { font-family: var(--font-display); font-size: var(--text-display-s); font-weight: 500; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.04; }
+    .policy-sub { font-size: var(--text-md); color: var(--ink-2); max-width: 56ch; line-height: 1.7; }
+    .filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+    .filter-tab { padding: 8px 17px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid var(--line-2); background: transparent; color: var(--ink-2); transition: all var(--dur-fast) var(--ease-out); }
+    .filter-tab:hover { border-color: var(--ink); color: var(--ink); }
+    .filter-tab.active { background: var(--ink); color: var(--paper-2); border-color: var(--ink); }
+    .policy-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; align-content: start; }
+    .policy-card {
+      position: relative; background: var(--paper-2); border: 1px solid var(--line); border-radius: var(--radius-card);
+      padding: 24px; overflow: hidden; display: flex; flex-direction: column;
+      transition: box-shadow var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out), border-color var(--dur-mid) var(--ease-out);
     }
-    .global-headline {
-      font-size: clamp(26px, 3.2vw, 42px);
-      font-weight: 700;
-      color: #FFFFFF;
-      line-height: 1.1;
-      letter-spacing: -0.5px;
-      margin-bottom: 16px;
-    }
-    .global-sub {
-      font-size: 16px;
-      color: var(--mint-light);
-      line-height: 1.7;
-    }
-    .global-stat-card {
-      background: #0F3828;
-      border-radius: var(--radius-card);
-      padding: 24px;
-      margin-top: 24px;
-    }
-    .global-stat-value {
-      font-size: 48px;
-      font-weight: 700;
-      color: var(--gold);
-      line-height: 1;
-      letter-spacing: -1px;
-      margin-bottom: 10px;
-    }
-    .global-stat-desc {
-      font-size: 14px;
-      color: var(--mint-light);
-      line-height: 1.6;
-    }
-    .cbam-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      font-weight: 500;
-      margin-bottom: 16px;
-    }
-    .cbam-flow {
-      display: flex;
-      align-items: stretch;
-      gap: 6px;
-      margin-bottom: 28px;
-      flex-wrap: nowrap;
-    }
-    .cbam-box {
-      background: #0F3828;
-      border-radius: var(--radius-card);
-      padding: 12px;
-      flex: 1;
-    }
-    .cbam-box-title {
-      font-size: 11px;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 4px;
-      line-height: 1.2;
-    }
-    .cbam-box-sub {
-      font-size: 10px;
-      color: var(--mint-light);
-      line-height: 1.4;
-    }
-    .cbam-arrow {
-      font-size: 16px;
-      color: var(--mint-light);
-      display: flex;
-      align-items: center;
-      flex-shrink: 0;
-    }
-    .sectors-label {
-      font-size: 11px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
-      font-weight: 500;
-      margin-bottom: 12px;
-    }
-    .sector-pills-green {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .sector-pill-green {
-      padding: 6px 14px;
-      border: 1px solid #2A6050;
-      background: #0F3828;
-      color: #FFFFFF;
-      border-radius: var(--radius-pill);
-      font-size: 12px;
-      font-weight: 500;
-    }
-    .article6-note {
-      font-size: 13px;
-      color: var(--mint-light);
-      font-style: italic;
-      line-height: 1.6;
-      margin-bottom: 24px;
-    }
-    .cbam-chart-title {
-      font-size: 11px;
-      color: var(--mint-light);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 16px;
-      font-weight: 500;
-    }
+    .policy-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--accent, var(--green)); transform: scaleX(0); transform-origin: left; transition: transform var(--dur-mid) var(--ease-out); }
+    .policy-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); border-color: var(--line-2); }
+    .policy-card:hover::before { transform: scaleX(1); }
+    .policy-card.hidden { display: none; }
+    .policy-card-tag { align-self: flex-start; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 11px; border-radius: var(--radius-tag); margin-bottom: 16px; color: #fff; }
+    .tag-act { background: var(--green); }
+    .tag-scheme { background: var(--maroon); }
+    .tag-programme { background: var(--policy-blue); }
+    .tag-body { background: var(--ink-3); }
+    .policy-card-title { font-size: var(--text-lg); font-weight: 700; color: var(--ink); margin-bottom: 10px; line-height: 1.3; letter-spacing: -0.01em; }
+    .policy-card-desc { font-size: var(--text-sm); color: var(--ink-2); line-height: 1.65; margin-bottom: 18px; }
+    .policy-card-status { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink-3); font-weight: 500; font-family: var(--font-mono); letter-spacing: 0.02em; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--signal-ok); flex-shrink: 0; }
+    .status-dot.pilot { background: var(--signal-warn); }
+    .status-dot.body { background: var(--policy-blue); }
+
+    /* ─── 9. COMPLIANCE CHECKER (dark) ─────────────────────────── */
+    #compliance { padding: var(--section-pad) 0; background: var(--ink); position: relative; overflow: hidden; }
+    #compliance::before { content: ''; position: absolute; top: -20%; right: -10%; width: 50%; height: 70%; background: radial-gradient(circle, rgba(23,77,56,0.55), transparent 70%); pointer-events: none; }
+    .compliance-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); display: grid; grid-template-columns: 40% 60%; gap: 64px; align-items: start; position: relative; z-index: 1; }
+    .compliance-left .eyebrow { color: var(--mint); display: block; margin-bottom: 18px; }
+    .compliance-headline { font-family: var(--font-display); font-size: var(--text-display-s); font-weight: 500; color: #fff; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .compliance-left .section-subheading { color: rgba(255,255,255,0.85); }
+    .compliance-sub { font-size: var(--text-md); color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .compliance-right { display: flex; flex-direction: column; gap: 14px; }
+    .checker-card { background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.1); border-radius: var(--radius-card); padding: 24px; backdrop-filter: blur(4px); }
+    .checker-step { font-family: var(--font-mono); font-size: 12px; color: var(--mint); font-weight: 500; margin-bottom: 10px; letter-spacing: 0.1em; }
+    .checker-title { font-size: var(--text-lg); font-weight: 700; color: #fff; margin-bottom: 16px; letter-spacing: -0.01em; }
+    .checker-sub-text { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 14px; line-height: 1.5; }
+    .sector-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sector-chip { padding: 8px 14px; border: 1px solid rgba(255,255,255,0.18); border-radius: var(--radius-tag); background: transparent; color: rgba(255,255,255,0.85); font-size: 13px; font-weight: 500; cursor: pointer; transition: all var(--dur-fast) var(--ease-out); }
+    .sector-chip:hover { border-color: var(--mint); color: #fff; }
+    .sector-chip.selected { background: var(--green); border-color: var(--green-700); color: #fff; box-shadow: 0 4px 14px rgba(23,77,56,0.5); }
+    .dark-input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.18); border-radius: var(--radius-tag); color: #fff; font-family: var(--font-mono); font-size: 15px; padding: 12px 15px; outline: none; transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+    .dark-input:focus { border-color: var(--mint); box-shadow: 0 0 0 3px rgba(107,191,160,0.18); }
+    .dark-input::placeholder { color: rgba(255,255,255,0.3); }
+    .obligation-result { font-size: var(--text-md); line-height: 1.6; padding: 4px 0; min-height: 24px; }
+    .obligation-result.result-pop { animation: resultPop var(--dur-mid) var(--ease-out); }
+    @keyframes resultPop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+    .result-obligated { color: #FF8A7A; font-weight: 600; }
+    .result-approaching { color: #F5B342; font-weight: 600; }
+    .result-monitor { color: var(--mint); font-weight: 600; }
+    .result-empty { color: rgba(255,255,255,0.35); font-weight: 400; font-size: 13px; }
+    .checker-cta { margin-top: 16px; padding: 11px 20px; background: var(--green); color: #fff; }
+    .checker-cta:hover { background: var(--green-700); box-shadow: 0 6px 18px rgba(23,77,56,0.5); transform: translateY(-2px); }
+    .compliance-legend { display: flex; gap: 22px; flex-wrap: wrap; margin-top: 4px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .legend-item { display: flex; align-items: center; gap: 8px; font-size: 11px; color: rgba(255,255,255,0.55); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .l-monitor { background: var(--mint); }
+    .l-approach { background: #F5B342; }
+    .l-obligated { background: #FF8A7A; }
+
+    /* ─── 10. EVOLUTION TIMELINE ───────────────────────────────── */
+    #evolution { padding: var(--section-pad) 0; background: var(--paper); }
+    .evolution-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); display: grid; grid-template-columns: 38% 1fr; gap: 80px; align-items: start; }
+    .evolution-left { position: sticky; top: 112px; }
+    .evolution-right { min-width: 0; }
+    .evolution-header { margin-bottom: 22px; }
+    .evolution-header .eyebrow { color: var(--green); display: block; margin-bottom: 16px; }
+    .evolution-heading { font-family: var(--font-display); font-size: var(--text-display-s); font-weight: 500; color: var(--ink); letter-spacing: -0.02em; margin-bottom: 10px; line-height: 1.04; }
+    .evolution-sub { font-size: var(--text-md); color: var(--ink-3); }
+    .milestone-rows { position: relative; display: flex; flex-direction: column; max-width: 640px; }
+    .milestone-rows::before { content: ''; position: absolute; left: 13px; top: 6px; bottom: 6px; width: 2px; background: linear-gradient(to bottom, var(--green) 0%, var(--line-2) 60%, var(--line) 100%); }
+    .milestone-row { display: grid; grid-template-columns: 28px 1fr; gap: 0 22px; padding-bottom: 28px; }
+    .milestone-row:last-child { padding-bottom: 0; }
+    .milestone-row-left { position: relative; padding-top: 4px; }
+    .milestone-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--green); border: 3px solid var(--paper); box-shadow: 0 0 0 2px var(--green); position: absolute; left: 7px; top: 4px; }
+    .milestone-dot.live::after { content: ''; position: absolute; inset: -3px; border-radius: 50%; border: 2px solid var(--green); animation: pulseRing 2.6s var(--ease-out) infinite; }
+    @keyframes pulseRing { 0% { transform: scale(0.7); opacity: 0.7; } 100% { transform: scale(2.6); opacity: 0; } }
+    .milestone-card { background: var(--paper-2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; transition: box-shadow var(--dur-mid) var(--ease-out), transform var(--dur-mid) var(--ease-out); }
+    .milestone-card:hover { box-shadow: var(--shadow-md); transform: translateX(3px); }
+    .milestone-now { border-color: var(--green); background: var(--green-tint); }
+    .milestone-card-year { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; color: var(--green); margin-bottom: 6px; text-transform: uppercase; }
+    .milestone-card-title { font-size: var(--text-md); font-weight: 700; color: var(--ink); line-height: 1.3; margin-bottom: 7px; letter-spacing: -0.01em; }
+    .milestone-card-desc { font-size: var(--text-sm); color: var(--ink-2); line-height: 1.7; }
+    .milestone-history { overflow: hidden; max-height: 0; transition: max-height var(--dur-slow) var(--ease-in-out), opacity var(--dur-mid) var(--ease-out); opacity: 0; }
+    .milestone-history.expanded { max-height: 1400px; opacity: 1; }
+    .timeline-toggle { display: inline-flex; align-items: center; gap: 8px; margin: 8px 0 0; background: none; border: 1.5px solid var(--green); color: var(--green); font-family: var(--font-body); font-size: 13px; font-weight: 600; letter-spacing: 0.02em; padding: 8px 18px; border-radius: var(--radius-pill); cursor: pointer; transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out); }
+    .timeline-toggle:hover { background: var(--green); color: #fff; box-shadow: var(--shadow-md); }
+    .timeline-toggle svg { transition: transform var(--dur-mid) var(--ease-out); }
+    .timeline-toggle.open svg { transform: rotate(180deg); }
+
+    /* ─── 11. GLOBAL CONTEXT (green) ───────────────────────────── */
+    #global { padding: var(--section-pad) 0; background: var(--green); overflow: hidden; position: relative; }
+    #global::before { content: ''; position: absolute; inset: 0; background: radial-gradient(110% 80% at 90% 0%, rgba(255,255,255,0.06), transparent 55%); pointer-events: none; }
+    .global-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); display: grid; grid-template-columns: 45% 55%; gap: 72px; align-items: start; position: relative; z-index: 1; }
+    .global-left .eyebrow { color: rgba(255,255,255,0.6); display: block; margin-bottom: 18px; }
+    .global-headline { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: 500; color: #fff; line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 8px; }
+    .global-left .section-subheading { color: #fff; }
+    .global-sub { font-size: var(--text-lg); color: var(--mint-2); line-height: 1.72; }
+    .global-stat-card { background: var(--green-deep); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-card); padding: 28px; margin-top: 28px; box-shadow: var(--shadow-dk); }
+    .global-stat-value { font-family: var(--font-display); font-size: clamp(2.75rem, 5vw, 3.75rem); font-weight: 500; color: var(--gold); line-height: 1; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .global-stat-desc { font-size: var(--text-md); color: var(--mint-2); line-height: 1.6; }
+    .cbam-label, .sectors-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); font-weight: 500; margin-bottom: 16px; }
+    .cbam-flow { display: flex; align-items: stretch; gap: 8px; margin-bottom: 30px; flex-wrap: nowrap; }
+    .cbam-box { background: var(--green-deep); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 14px; flex: 1; min-width: 0; transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out); }
+    .cbam-box:hover { transform: translateY(-3px); border-color: rgba(107,191,160,0.4); }
+    .cbam-box-title { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 5px; line-height: 1.2; }
+    .cbam-box-sub { font-size: 11px; color: var(--mint-2); line-height: 1.4; }
+    .cbam-arrow { font-size: 16px; color: var(--mint-2); display: flex; align-items: center; flex-shrink: 0; }
+    .sector-pills-green { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .sector-pill-green { padding: 7px 15px; border: 1px solid rgba(255,255,255,0.18); background: var(--green-deep); color: #fff; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500; }
+    .article6-note { font-size: 13px; color: var(--mint-2); font-style: italic; line-height: 1.6; margin-bottom: 28px; padding-left: 14px; border-left: 2px solid rgba(255,255,255,0.18); }
+    .cbam-chart-title { font-family: var(--font-mono); font-size: 11px; color: var(--mint-2); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; font-weight: 500; }
     #cbam-chart { display: block; }
 
-    /* ─── 11. FOOTER ────────────────────────────────────────────── */
-    #footer {
-      background: #0A0A0A;
-      padding: 56px 0 0;
-    }
-    .footer-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding: 0 var(--h-pad);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-    .footer-logo {
-      font-size: 16px;
-      font-weight: 700;
-      color: #FFFFFF;
-      margin-bottom: 8px;
-    }
-    .footer-tagline {
-      font-size: 14px;
-      color: var(--mint);
-      margin-bottom: 10px;
-    }
-    .footer-disclaimer {
-      font-size: 12px;
-      color: #888;
-      max-width: 300px;
-      line-height: 1.6;
-    }
-    .footer-links { display: flex; gap: 48px; }
-    .footer-link-col {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .footer-link-col a {
-      font-size: 14px;
-      color: #888;
-      transition: color 0.2s ease;
-    }
-    .footer-link-col a:hover { color: #FFFFFF; }
-    .footer-bottom {
-      margin-top: 40px;
-      border-top: 1px solid #1A1A1A;
-      padding: 16px var(--h-pad);
-      max-width: 100%;
-    }
-    .footer-bottom-inner {
-      max-width: var(--max-w);
-      margin: 0 auto;
-    }
-    .footer-copy { font-size: 12px; color: #888; }
+    /* ─── 12. FOOTER ───────────────────────────────────────────── */
+    #footer { background: var(--ink); padding: 72px 0 0; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; padding: 0 var(--h-pad); display: flex; justify-content: space-between; align-items: flex-start; gap: 48px; flex-wrap: wrap; }
+    .footer-logo { display: inline-flex; align-items: center; gap: 9px; font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 14px; }
+    .footer-logo .pulse-mark { width: 22px; height: 22px; display: grid; place-items: center; background: var(--green); border-radius: 6px; }
+    .footer-logo .pulse-mark svg { width: 15px; height: 15px; }
+    .footer-tagline { font-size: 14px; color: var(--mint); margin-bottom: 12px; }
+    .footer-disclaimer { font-size: 12px; color: rgba(255,255,255,0.5); max-width: 320px; line-height: 1.65; }
+    .footer-links { display: flex; gap: 56px; }
+    .footer-link-col { display: flex; flex-direction: column; gap: 13px; }
+    .footer-col-head { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
+    .footer-link-col a { position: relative; font-size: 14px; color: rgba(255,255,255,0.62); width: fit-content; transition: color var(--dur-fast) var(--ease-out); }
+    .footer-link-col a:hover { color: #fff; }
+    .footer-bottom { margin-top: 56px; border-top: 1px solid var(--line-dk); }
+    .footer-bottom-inner { max-width: var(--max-w); margin: 0 auto; padding: 20px var(--h-pad); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .footer-copy { font-family: var(--font-mono); font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.02em; }
 
-    /* ─── ANIMATION ─────────────────────────────────────────────── */
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ─── RESPONSIVE ────────────────────────────────────────────── */
+    /* ─── RESPONSIVE ───────────────────────────────────────────── */
     @media (max-width: 1024px) {
-      :root { --h-pad: 40px; }
-      .paradox-inner { gap: 48px; }
-      .legal-inner { gap: 48px; }
-      .global-inner { gap: 48px; }
+      :root { --h-pad: 40px; --section-pad: 80px; }
+      .paradox-inner, .legal-inner, .global-inner, .compliance-inner { gap: 48px; }
+    }
+    @media (max-width: 860px) {
+      /* Full-bleed photo behind text — show the imagery on mobile */
+      .how-card { grid-template-columns: 1fr; }
+      .how-card-visual { display: flex; position: absolute; inset: 0; padding: 0; z-index: 0; }
+      .how-card-visual-img { opacity: 0.58; }
+      .how-card-visual::after { background: linear-gradient(to top, rgba(8,14,10,0.94) 0%, rgba(8,14,10,0.72) 48%, rgba(8,14,10,0.55) 100%); }
+      .how-card-visual-num { display: none; }
+      .how-card-text { position: relative; z-index: 2; background: transparent; justify-content: flex-end; padding: 40px 28px 92px; }
     }
     @media (max-width: 768px) {
-      :root { --section-pad: 56px; --h-pad: 24px; }
+      :root { --section-pad: 64px; --h-pad: 24px; }
       .nav-inner { display: flex; justify-content: space-between; }
       .nav-links, .nav-ctas { display: none; }
       .nav-hamburger { display: flex; }
-      .hero-headline { font-size: 40px; letter-spacing: -0.5px; }
-      .hero-sub { font-size: 16px; }
-      .stats-inner { height: auto; flex-wrap: wrap; padding: 0; }
-      .stat-item {
-        flex: 1 1 calc(50% - 1px);
-        min-width: 120px;
-        height: 80px;
-        border-bottom: 1px solid #E8E8E8;
-      }
+      .stats-inner { flex-wrap: wrap; padding: 0; }
+      .stat-item { flex: 1 1 calc(50% - 1px); min-width: 140px; min-height: 86px; border-bottom: 1px solid var(--line); }
       .stat-item:nth-child(2n) { border-right: none; }
-      .stat-item:last-child { flex: 1 1 100%; border-right: none; }
+      .stat-item:last-child { flex: 1 1 100%; border-right: none; border-bottom: none; }
+      .news-grid { grid-template-columns: 1fr; gap: 36px; }
       .paradox-body { grid-template-columns: 1fr; gap: 40px; }
-      .paradox-num { font-size: 40px; }
-      .legal-inner { grid-template-columns: 1fr; }
+      .legal-inner { grid-template-columns: 1fr; gap: 40px; }
       .legal-left { position: relative; top: auto; }
-      .legal-headline { font-size: 36px; }
-      .policy-grid { grid-template-columns: 1fr 1fr; }
+      .policy-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
       .compliance-inner { grid-template-columns: 1fr; gap: 40px; }
-      .compliance-headline { font-size: 32px; }
-      .news-grid { grid-template-columns: 1fr; gap: 32px; }
-      .news-featured-title { font-size: 22px; }
       .global-inner { grid-template-columns: 1fr; gap: 40px; }
-      .global-headline { font-size: 28px; }
-      .global-stat-value { font-size: 36px; }
-      .footer-inner { flex-direction: column; gap: 32px; }
-      .footer-links { gap: 32px; }
+      .cbam-flow { flex-wrap: wrap; gap: 10px; }
+      .cbam-arrow { display: none; }
+      .cbam-box { flex: 1 1 calc(50% - 5px); }
+      .evolution-inner { grid-template-columns: 1fr; gap: 28px; }
+      .evolution-left { position: relative; top: auto; }
+      .footer-inner { flex-direction: column; gap: 36px; }
     }
     @media (max-width: 480px) {
-      .hero-headline { font-size: 32px; }
       .policy-grid { grid-template-columns: 1fr; }
-      .evolution-heading { font-size: 26px; }
-      .compliance-headline { font-size: 26px; }
-      .cbam-flow { gap: 4px; }
-      .cbam-box { padding: 10px 8px; }
-      .cbam-box-title { font-size: 10px; }
+      .footer-links { gap: 36px; width: 100%; flex-wrap: wrap; }
     }
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+      .js [data-reveal] { opacity: 1 !important; transform: none !important; }
+      #hero-bg-img { animation: none; transform: scale(1.06); }
     }
   </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 1. NAV                                                         -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<a class="skip-link" href="#hero">Skip to content</a>
+
+<!-- ══ 1. NAV ══════════════════════════════════════════════════ -->
 <nav id="nav" role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="#" class="nav-logo" aria-label="Carbon Pulse home">✦ Carbon Pulse</a>
+    <a href="#hero" class="nav-logo" aria-label="Carbon Pulse home">
+      <span class="pulse-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none"><path d="M3.5 17h6.2l2.3-7.6 4.9 13.8 2.4-6.2H28.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      Carbon Pulse
+    </a>
     <ul class="nav-links" role="list">
       <li><a href="#news">News</a></li>
       <li><a href="#policy">Policies</a></li>
       <li><a href="#global">Global Context</a></li>
     </ul>
     <div class="nav-ctas">
-      <a href="#compliance" class="btn-solid">Check Compliance</a>
+      <a href="#compliance" class="btn btn-solid">Check Compliance <span class="arrow" aria-hidden="true">→</span></a>
     </div>
-    <button class="nav-hamburger" aria-label="Toggle mobile menu" aria-expanded="false" id="hamburger">
+    <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu" id="hamburger">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 
-<div class="nav-mobile-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation">
+<div class="nav-mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
   <a href="#news">News</a>
   <a href="#policy">Policies</a>
   <a href="#global">Global Context</a>
   <div class="nav-mobile-ctas">
-    <a href="#compliance" class="btn-solid">Check Compliance</a>
+    <a href="#compliance" class="btn btn-solid">Check Compliance <span class="arrow" aria-hidden="true">→</span></a>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 2. HERO                                                        -->
-<!-- ══════════════════════════════════════════════════════════════ -->
-<section id="hero" aria-label="Hero introduction">
-
-  <img id="hero-bg-img"
-    src="https://images.unsplash.com/photo-1756093158082-37e567772896?w=1600&auto=format&fit=crop&q=80"
-    alt="" aria-hidden="true">
-
-  <!-- (hidden) Topographic contour lines -->
-  <svg id="hero-bg-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <g fill="none">
-      <!-- Minor contours — thin, subtle -->
-      <g stroke="#4ADE80" stroke-width="0.9" opacity="0.13">
-        <path d="M 1060 340 C 1100 320 1150 335 1165 370 C 1180 408 1158 448 1115 460 C 1072 472 1028 450 1015 418 C 1002 385 1020 360 1060 340 Z"/>
-        <path d="M 980 295 C 1040 258 1140 272 1182 338 C 1224 404 1200 484 1128 510 C 1056 536 968 502 930 442 C 892 382 920 332 980 295 Z"/>
-        <path d="M 870 248 C 960 198 1120 212 1188 302 C 1256 392 1228 510 1130 548 C 1032 586 888 546 832 464 C 776 382 780 298 870 248 Z"/>
-        <path d="M 780 210 C 900 148 1108 162 1200 272 C 1292 382 1262 530 1142 578 C 1022 626 844 580 772 482 C 700 384 660 272 780 210 Z"/>
-        <path d="M 640 180 C 810 100 1100 116 1220 256 C 1340 396 1304 574 1158 626 C 1012 678 790 618 702 496 C 614 374 470 260 640 180 Z"/>
-        <path d="M 480 164 C 700 62 1094 78 1244 246 C 1394 414 1352 620 1172 676 C 992 732 726 664 624 520 C 522 376 260 266 480 164 Z"/>
-        <path d="M 260 148 C 560 18 1086 42 1264 240 C 1442 438 1400 668 1186 726 C 972 784 656 706 538 542 C 420 378 -40 278 260 148 Z"/>
-        <path d="M -100 140 C 280 -20 1070 10 1282 234 C 1494 458 1448 716 1198 776 C 948 836 580 750 452 564 C 324 378 -480 300 -100 140 Z"/>
-        <path d="M 1090 390 C 1120 378 1145 390 1152 412 C 1159 434 1144 456 1118 462 C 1092 468 1068 452 1062 430 C 1056 408 1060 402 1090 390 Z"/>
-        <path d="M -200 620 C 100 700 400 730 680 700 C 960 670 1180 598 1280 520 C 1380 442 1430 360 1440 290"/>
-        <path d="M -200 720 C 80 790 380 818 680 790 C 980 762 1220 678 1320 588 C 1420 498 1440 412 1440 360"/>
-        <path d="M -200 820 C 60 878 320 900 640 878 C 960 856 1240 762 1360 656 C 1440 580 1440 490 1440 430"/>
-      </g>
-      <!-- Major contours — slightly brighter, 5th-interval lines -->
-      <g stroke="#22C55E" stroke-width="1.5" opacity="0.22">
-        <path d="M 920 268 C 1010 218 1132 232 1192 318 C 1252 404 1224 510 1130 548 C 1036 586 900 546 848 458 C 796 370 830 318 920 268 Z"/>
-        <path d="M 700 196 C 860 120 1110 136 1218 264 C 1326 392 1292 558 1150 606 C 1008 654 766 592 680 470 C 594 348 540 272 700 196 Z"/>
-        <path d="M 360 156 C 640 32 1092 60 1274 242 C 1456 424 1416 664 1180 722 C 944 780 624 708 506 536 C 388 364 80 280 360 156 Z"/>
-        <path d="M -200 520 C 140 610 420 640 700 612 C 980 584 1200 508 1300 428 C 1400 348 1440 266 1440 210"/>
-      </g>
-    </g>
-  </svg>
-
+<!-- ══ 2. HERO ═════════════════════════════════════════════════ -->
+<section id="hero" aria-label="Introduction">
+  <img id="hero-bg-img" src="https://images.unsplash.com/photo-1756093158082-37e567772896?w=1600&auto=format&fit=crop&q=80" alt="" aria-hidden="true" fetchpriority="high">
   <div class="hero-content">
-    <p class="hero-label">Carbon Pulse</p>
+    <p class="hero-label eyebrow">Carbon Pulse</p>
     <div id="hero-parallax">
-      <h1 class="hero-headline">
-        Everything happening<br>
-        in India's carbon<br>
-        market, explained.
-      </h1>
-      <p class="hero-sub">
-        One platform to understand every rule, deadline, and market signal shaping India's carbon economy.
-      </p>
+      <h1 class="hero-headline">Everything happening in India's carbon market, <em>explained.</em></h1>
+      <p class="hero-sub">One platform to understand every rule, deadline, and market signal shaping India's carbon economy.</p>
       <div class="hero-ctas">
-        <a href="#policy" class="hero-btn-white">Explore Policies →</a>
-        <a href="#compliance" class="hero-btn-green">Check Compliance →</a>
+        <a href="#policy" class="btn hero-btn-white">Explore Policies <span class="arrow" aria-hidden="true">→</span></a>
+        <a href="#compliance" class="btn hero-btn-green">Check Compliance <span class="arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </div>
+  <div class="hero-scroll-indicator" id="scroll-indicator" aria-hidden="true">Scroll</div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 3. STATS BAR                                                   -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 3. STATS BAR ════════════════════════════════════════════ -->
 <section id="stats-bar" aria-label="Key statistics">
   <div class="stats-inner">
     <div class="stat-item">
@@ -1570,19 +707,17 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 4. WHAT CHANGED THIS WEEK                                      -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 4. WHAT CHANGED THIS WEEK ═══════════════════════════════ -->
 <section id="news" aria-labelledby="news-heading">
   <div class="news-inner">
-    <div class="news-header">
+    <div class="news-header" data-reveal>
       <h2 class="section-heading" id="news-heading">What Changed This Week</h2>
-      <a href="#" class="news-all-link">All updates →</a>
+      <a href="#" class="news-all-link arrow-link">All updates <span class="arrow" aria-hidden="true">→</span></a>
     </div>
     <p class="news-date-line">Best of 25 June 2026</p>
 
     <div class="news-grid">
-      <div class="news-featured">
+      <div class="news-featured" data-reveal>
         <div class="news-featured-meta">
           <span class="inst-pill inst-bee">BEE</span>
           <span class="news-date">23 Mar 2026</span>
@@ -1592,43 +727,43 @@
         <p class="news-featured-summary">
           The Bureau of Energy Efficiency launched the Indian Carbon Market Portal at the Prakriti 2026 international conference in New Delhi — a centralised platform for CCTS registration, MRV, and credit issuance. Over 40 entities have already registered projects across biogas, hydrogen, and forestry. Full trading is expected to commence by July 2026.
         </p>
-        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2243377" class="news-read-link" target="_blank" rel="noopener">Read full update →</a>
+        <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2243377" class="news-read-link arrow-link" target="_blank" rel="noopener">Read full update <span class="arrow" aria-hidden="true">→</span></a>
       </div>
 
-      <div class="news-sidebar">
+      <div class="news-sidebar" data-reveal>
         <div class="news-story">
           <div class="news-story-meta">
-            <span class="inst-pill inst-cerc" style="font-size:10px;padding:3px 8px;">CERC</span>
+            <span class="inst-pill inst-cerc" style="font-size:10px;padding:3px 9px;">CERC</span>
             <span class="news-story-type">New Regulation</span>
           </div>
           <p class="news-story-title">CERC Notifies CCC Trading Regulations 2026</p>
           <div class="news-story-footer">
             <span class="news-story-date">27 Feb 2026</span>
-            <a href="https://renewablewatch.in/2026/03/03/cerc-notifies-regulations-for-carbon-credit-trading-framework/" class="news-story-link" target="_blank" rel="noopener">Read →</a>
+            <a href="https://renewablewatch.in/2026/03/03/cerc-notifies-regulations-for-carbon-credit-trading-framework/" class="news-story-link arrow-link" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
 
         <div class="news-story">
           <div class="news-story-meta">
-            <span class="inst-pill inst-moef" style="font-size:10px;padding:3px 8px;">MoEF</span>
+            <span class="inst-pill inst-moef" style="font-size:10px;padding:3px 9px;">MoEF</span>
             <span class="news-story-type">Compliance Targets</span>
           </div>
           <p class="news-story-title">Final Emission Intensity Targets Set for All 9 CCTS Sectors</p>
           <div class="news-story-footer">
             <span class="news-story-date">16 Jan 2026</span>
-            <a href="https://icapcarbonaction.com/en/news/india-notifies-emission-intensity-targets-nine-sectors-under-carbon-credit-trading-scheme" class="news-story-link" target="_blank" rel="noopener">Read →</a>
+            <a href="https://icapcarbonaction.com/en/news/india-notifies-emission-intensity-targets-nine-sectors-under-carbon-credit-trading-scheme" class="news-story-link arrow-link" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
 
         <div class="news-story">
           <div class="news-story-meta">
-            <span class="inst-pill inst-ccts" style="font-size:10px;padding:3px 8px;">CCTS</span>
+            <span class="inst-pill inst-ccts" style="font-size:10px;padding:3px 9px;">CCTS</span>
             <span class="news-story-type">Market Update</span>
           </div>
           <p class="news-story-title">Floor &amp; Forbearance Prices Still Pending — Key to Market Liquidity</p>
           <div class="news-story-footer">
             <span class="news-story-date">Jun 2026</span>
-            <a href="https://icapcarbonaction.com/en/ets/indian-carbon-credit-trading-scheme" class="news-story-link" target="_blank" rel="noopener">Read →</a>
+            <a href="https://icapcarbonaction.com/en/ets/indian-carbon-credit-trading-scheme" class="news-story-link arrow-link" target="_blank" rel="noopener">Read <span class="arrow" aria-hidden="true">→</span></a>
           </div>
         </div>
       </div>
@@ -1636,21 +771,16 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 5. INDIA'S CARBON PARADOX                                      -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 5. INDIA'S CARBON PARADOX ═══════════════════════════════ -->
 <section id="paradox" aria-labelledby="paradox-heading">
   <div class="paradox-inner">
-
-    <!-- Section header row -->
-    <div class="paradox-header">
+    <div class="paradox-header" data-reveal>
       <h2 class="section-heading" id="paradox-heading">India's carbon paradox</h2>
       <span class="paradox-header-note">Per capita CO₂ · tonnes per person per year</span>
     </div>
 
-    <!-- Body: stats left, chart right -->
     <div class="paradox-body">
-      <div class="paradox-left">
+      <div class="paradox-left" data-reveal>
         <div class="paradox-callout">
           <div class="paradox-num">3%</div>
           <div class="paradox-callout-text">
@@ -1666,91 +796,68 @@
           </div>
         </div>
         <p class="paradox-text">
-          India emits a fraction of what wealthy nations do per person, yet bears a disproportionate share of climate consequences. A carbon market isn't just an economic instrument here. It is a negotiating position and a signal to the world.
+          India emits a fraction of what wealthy nations do per person, yet bears a disproportionate share of climate consequences. A carbon market isn't just an economic instrument here. <strong>It is a negotiating position and a signal to the world.</strong>
         </p>
       </div>
 
-      <div class="paradox-right">
-        <!--
-          Isotype chart — 3 equal columns, icons bottom-aligned at y=200.
-          Column centres: India=103, Global Avg=310, US=517.
-          Icon: head r=8, body w=16 h=20. Row pitch=46px (icon 38 + gap 8).
-          Bottom row: head cy=170, body y=180–200.
-          Mid row:    head cy=124, body y=134–154.
-          Top row:    head cy=78,  body y=88–108.
-        -->
+      <div class="paradox-right" data-reveal>
         <svg class="isotype-chart" viewBox="0 0 620 285" xmlns="http://www.w3.org/2000/svg"
              role="img" aria-label="Per capita CO2: India 1.9t, Global average 4.7t, United States 14.7t">
           <title>Per Capita CO2 Emissions</title>
 
-          <!-- ── INDIA (centre x=103) — 2 icons, side by side ── -->
-          <circle cx="91"  cy="170" r="8" fill="#174D38"/>
-          <rect   x="83"  y="180" width="16" height="20" rx="3" fill="#174D38"/>
-          <circle cx="115" cy="170" r="8" fill="#174D38"/>
-          <rect   x="107" y="180" width="16" height="20" rx="3" fill="#174D38"/>
-          <text x="103" y="228" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" font-weight="800" fill="#174D38">1.9t</text>
-          <text x="103" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">India</text>
+          <!-- INDIA -->
+          <circle cx="91"  cy="170" r="8" fill="#174D38"/><rect x="83"  y="180" width="16" height="20" rx="3" fill="#174D38"/>
+          <circle cx="115" cy="170" r="8" fill="#174D38"/><rect x="107" y="180" width="16" height="20" rx="3" fill="#174D38"/>
+          <text x="103" y="228" text-anchor="middle" font-family="Newsreader,serif" font-size="22" font-weight="600" fill="#174D38">1.9t</text>
+          <text x="103" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="500" fill="#0A0A0A">INDIA</text>
 
-          <!-- ── GLOBAL AVG (centre x=310) — 5 icons (3 bottom + 2 top) ── -->
-          <!-- bottom row: x = 286, 310, 334 -->
-          <circle cx="286" cy="170" r="8" fill="#C0C0C0"/><rect x="278" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="310" cy="170" r="8" fill="#C0C0C0"/><rect x="302" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="334" cy="170" r="8" fill="#C0C0C0"/><rect x="326" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <!-- top row: x = 298, 322 (centred on 310) -->
-          <circle cx="298" cy="124" r="8" fill="#C0C0C0"/><rect x="290" y="134" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="322" cy="124" r="8" fill="#C0C0C0"/><rect x="314" y="134" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <text x="310" y="228" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" font-weight="800" fill="#888">4.7t</text>
-          <text x="310" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">Global Avg</text>
+          <!-- GLOBAL AVG -->
+          <circle cx="286" cy="170" r="8" fill="#C2C0B8"/><rect x="278" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="310" cy="170" r="8" fill="#C2C0B8"/><rect x="302" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="334" cy="170" r="8" fill="#C2C0B8"/><rect x="326" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="298" cy="124" r="8" fill="#C2C0B8"/><rect x="290" y="134" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="322" cy="124" r="8" fill="#C2C0B8"/><rect x="314" y="134" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <text x="310" y="228" text-anchor="middle" font-family="Newsreader,serif" font-size="22" font-weight="600" fill="#8C8A82">4.7t</text>
+          <text x="310" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="500" fill="#0A0A0A">GLOBAL AVG</text>
 
-          <!-- ── US (centre x=517) — 15 icons (5 cols × 3 rows) ── -->
-          <!-- x positions: 469 493 517 541 565 -->
-          <!-- bottom row -->
-          <circle cx="469" cy="170" r="8" fill="#C0C0C0"/><rect x="461" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="493" cy="170" r="8" fill="#C0C0C0"/><rect x="485" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="517" cy="170" r="8" fill="#C0C0C0"/><rect x="509" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="541" cy="170" r="8" fill="#C0C0C0"/><rect x="533" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="565" cy="170" r="8" fill="#C0C0C0"/><rect x="557" y="180" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <!-- mid row -->
-          <circle cx="469" cy="124" r="8" fill="#C0C0C0"/><rect x="461" y="134" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="493" cy="124" r="8" fill="#C0C0C0"/><rect x="485" y="134" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="517" cy="124" r="8" fill="#C0C0C0"/><rect x="509" y="134" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="541" cy="124" r="8" fill="#C0C0C0"/><rect x="533" y="134" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="565" cy="124" r="8" fill="#C0C0C0"/><rect x="557" y="134" width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <!-- top row -->
-          <circle cx="469" cy="78"  r="8" fill="#C0C0C0"/><rect x="461" y="88"  width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="493" cy="78"  r="8" fill="#C0C0C0"/><rect x="485" y="88"  width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="517" cy="78"  r="8" fill="#C0C0C0"/><rect x="509" y="88"  width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="541" cy="78"  r="8" fill="#C0C0C0"/><rect x="533" y="88"  width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <circle cx="565" cy="78"  r="8" fill="#C0C0C0"/><rect x="557" y="88"  width="16" height="20" rx="3" fill="#C0C0C0"/>
-          <text x="517" y="228" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" font-weight="800" fill="#888">14.7t</text>
-          <text x="517" y="250" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#0A0A0A">United States</text>
+          <!-- US -->
+          <circle cx="469" cy="170" r="8" fill="#C2C0B8"/><rect x="461" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="493" cy="170" r="8" fill="#C2C0B8"/><rect x="485" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="517" cy="170" r="8" fill="#C2C0B8"/><rect x="509" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="541" cy="170" r="8" fill="#C2C0B8"/><rect x="533" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="565" cy="170" r="8" fill="#C2C0B8"/><rect x="557" y="180" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="469" cy="124" r="8" fill="#C2C0B8"/><rect x="461" y="134" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="493" cy="124" r="8" fill="#C2C0B8"/><rect x="485" y="134" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="517" cy="124" r="8" fill="#C2C0B8"/><rect x="509" y="134" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="541" cy="124" r="8" fill="#C2C0B8"/><rect x="533" y="134" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="565" cy="124" r="8" fill="#C2C0B8"/><rect x="557" y="134" width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="469" cy="78"  r="8" fill="#C2C0B8"/><rect x="461" y="88"  width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="493" cy="78"  r="8" fill="#C2C0B8"/><rect x="485" y="88"  width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="517" cy="78"  r="8" fill="#C2C0B8"/><rect x="509" y="88"  width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="541" cy="78"  r="8" fill="#C2C0B8"/><rect x="533" y="88"  width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <circle cx="565" cy="78"  r="8" fill="#C2C0B8"/><rect x="557" y="88"  width="16" height="20" rx="3" fill="#C2C0B8"/>
+          <text x="517" y="228" text-anchor="middle" font-family="Newsreader,serif" font-size="22" font-weight="600" fill="#8C8A82">14.7t</text>
+          <text x="517" y="250" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="11" font-weight="500" fill="#0A0A0A">UNITED STATES</text>
 
-          <!-- Column dividers -->
-          <line x1="207" y1="60" x2="207" y2="244" stroke="#E8E8E8" stroke-width="1"/>
-          <line x1="413" y1="60" x2="413" y2="244" stroke="#E8E8E8" stroke-width="1"/>
-
-          <!-- Scale note -->
-          <text x="310" y="272" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#666" font-style="italic">Each figure ≈ 1 tonne of CO2 per person per year</text>
+          <line x1="207" y1="60" x2="207" y2="244" stroke="#E2E0DA" stroke-width="1"/>
+          <line x1="413" y1="60" x2="413" y2="244" stroke="#E2E0DA" stroke-width="1"/>
+          <text x="310" y="272" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5C5E60" font-style="italic">Each figure ≈ 1 tonne of CO2 per person per year</text>
         </svg>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 5. LEGAL ARCHITECTURE                                          -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 6. LEGAL ARCHITECTURE ═══════════════════════════════════ -->
 <section id="legal" aria-labelledby="legal-heading">
   <div class="legal-inner">
     <div class="legal-left">
-      <h2 class="section-heading" id="legal-heading">The Legal Architecture</h2>
-      <p class="section-subheading">Three layers.<br>One market.</p>
+      <h2 class="legal-headline" id="legal-heading">The Legal Architecture</h2>
+      <p class="section-subheading">Three layers. One market.</p>
       <p class="legal-sub">India's carbon market is built on the Energy Conservation Act — amended in 2022 to explicitly authorise carbon trading. On top of that sits the Carbon Credit Trading Scheme, which defines who participates and how credits are issued. The rules and methodologies underneath specify exactly how entities measure, report, and trade.</p>
     </div>
 
     <div class="legal-right">
-      <!-- Layer 1: Implementation -->
       <div class="strata-card strata-impl" data-strata>
         <div class="strata-card-layer">Implementation</div>
         <div class="strata-card-title">Rules &amp; Methodologies</div>
@@ -1764,7 +871,6 @@
         </div>
       </div>
 
-      <!-- Layer 2: Framework -->
       <div class="strata-card strata-framework" data-strata>
         <div class="strata-card-layer">Framework</div>
         <div class="strata-card-title">
@@ -1774,12 +880,11 @@
         <div class="strata-sub">Defines the market architecture — compliance and offset tracks, registry, trading platform, and governance roles. Notified by MoEF under the EC Act.</div>
       </div>
 
-      <!-- Layer 3: Foundation -->
       <div class="strata-card strata-foundation" data-strata>
         <div class="strata-card-layer">Foundation</div>
         <div class="strata-card-title">
           Energy Conservation Act
-          <span style="font-size:13px;font-weight:400;color:#8BBFAA;">2001 — amended 2022</span>
+          <span style="font-size:13px;font-weight:400;">2001 — amended 2022</span>
         </div>
         <div class="strata-sub">Establishes the legal authority for energy conservation and enables carbon markets. The 2022 amendment explicitly legalised a domestic carbon trading scheme for the first time.</div>
       </div>
@@ -1787,14 +892,10 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 4b. HOW IT WORKS                                               -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 7. HOW IT WORKS ═════════════════════════════════════════ -->
 <section id="how-it-works" aria-labelledby="how-heading">
-
   <div class="how-header">
-    <h2 class="section-heading" id="how-heading">How the market works</h2>
-    <span class="how-header-note">India's Carbon Credit Trading Scheme — the mechanics</span>
+    <h2 class="how-headline" id="how-heading">How the market works</h2>
     <p class="how-header-intro">The Carbon Credit Trading Scheme (CCTS) creates compliance obligations for 800+ industrial units across 9 hard-to-abate sectors, launched under the Energy Conservation Act 2022. Here's the five-step cycle every obligated entity goes through.</p>
   </div>
 
@@ -1803,7 +904,7 @@
 
       <div class="how-card active" data-index="0">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="step1.jpg" alt="" aria-hidden="true">
+          <img class="how-card-visual-img" src="step1.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <span class="how-card-visual-num">01</span>
         </div>
         <div class="how-card-text">
@@ -1815,7 +916,7 @@
 
       <div class="how-card" data-index="1">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="step2.jpg" alt="" aria-hidden="true">
+          <img class="how-card-visual-img" src="step2.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <span class="how-card-visual-num">02</span>
         </div>
         <div class="how-card-text">
@@ -1827,7 +928,7 @@
 
       <div class="how-card" data-index="2">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="step3.jpg" alt="" aria-hidden="true">
+          <img class="how-card-visual-img" src="step3.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <span class="how-card-visual-num">03</span>
         </div>
         <div class="how-card-text">
@@ -1839,7 +940,7 @@
 
       <div class="how-card" data-index="3">
         <div class="how-card-visual">
-          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1767424412548-1a1ac7f4b9bc?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true">
+          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1767424412548-1a1ac7f4b9bc?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <span class="how-card-visual-num">04</span>
         </div>
         <div class="how-card-text">
@@ -1850,8 +951,8 @@
       </div>
 
       <div class="how-card" data-index="4">
-        <div class="how-card-visual" style="background: #0F3828;">
-          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1773433392027-2dff23126d86?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true">
+        <div class="how-card-visual">
+          <img class="how-card-visual-img" src="https://images.unsplash.com/photo-1773433392027-2dff23126d86?w=1024&auto=format&fit=crop&q=80" alt="" aria-hidden="true" loading="lazy" decoding="async">
           <span class="how-card-visual-num">05</span>
         </div>
         <div class="how-card-text">
@@ -1861,8 +962,7 @@
         </div>
       </div>
 
-      <!-- Progress dots -->
-      <div class="how-progress" id="how-progress">
+      <div class="how-progress" id="how-progress" aria-hidden="true">
         <div class="how-prog-dot active"></div>
         <div class="how-prog-dot"></div>
         <div class="how-prog-dot"></div>
@@ -1872,16 +972,13 @@
 
     </div>
   </div>
-
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 6. POLICY LANDSCAPE                                            -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 8. POLICY LANDSCAPE ═════════════════════════════════════ -->
 <section id="policy" aria-labelledby="policy-heading">
   <div class="policy-inner">
-    <div class="policy-header">
-      <h2 class="section-heading" id="policy-heading">India's Carbon Policy Framework</h2>
+    <div class="policy-header" data-reveal>
+      <h2 class="policy-heading" id="policy-heading">India's Carbon Policy Framework</h2>
       <p class="policy-sub">The Acts, Regulations, Schemes, and Compliance Frameworks shaping India's carbon markets.</p>
     </div>
 
@@ -1894,77 +991,57 @@
     </div>
 
     <div class="policy-grid" id="policy-grid">
-      <article class="policy-card" data-category="act">
+      <article class="policy-card" data-category="act" style="--accent:var(--green);">
         <span class="policy-card-tag tag-act">Act</span>
         <h3 class="policy-card-title">Energy Conservation Amendment Act</h3>
         <p class="policy-card-desc">Mandates energy efficiency in large industries and establishes the legal basis for carbon trading in India.</p>
-        <div class="policy-card-status">
-          <span class="status-dot"></span>
-          <span>Active — 2022</span>
-        </div>
+        <div class="policy-card-status"><span class="status-dot"></span><span>Active — 2022</span></div>
       </article>
 
-      <article class="policy-card" data-category="scheme">
+      <article class="policy-card" data-category="scheme" style="--accent:var(--maroon);">
         <span class="policy-card-tag tag-scheme">Scheme</span>
         <h3 class="policy-card-title">Carbon Credit Trading Scheme (CCTS)</h3>
         <p class="policy-card-desc">India's official carbon market framework defining compliance and offset tracks, registry, and governance architecture.</p>
-        <div class="policy-card-status">
-          <span class="status-dot pilot"></span>
-          <span>In Pilot — ~300 obligated entities</span>
-        </div>
+        <div class="policy-card-status"><span class="status-dot pilot"></span><span>In Pilot — ~300 obligated entities</span></div>
       </article>
 
-      <article class="policy-card" data-category="scheme">
+      <article class="policy-card" data-category="scheme" style="--accent:var(--maroon);">
         <span class="policy-card-tag tag-scheme">Scheme</span>
         <h3 class="policy-card-title">PAT Scheme — Perform Achieve &amp; Trade</h3>
         <p class="policy-card-desc">Energy efficiency targets for Designated Consumers across 13 industrial sectors, administered by BEE.</p>
-        <div class="policy-card-status">
-          <span class="status-dot"></span>
-          <span>Active — Cycle VII 2022–23</span>
-        </div>
+        <div class="policy-card-status"><span class="status-dot"></span><span>Active — Cycle VII 2022–23</span></div>
       </article>
 
-      <article class="policy-card" data-category="programme">
+      <article class="policy-card" data-category="programme" style="--accent:var(--policy-blue);">
         <span class="policy-card-tag tag-programme">Programme</span>
         <h3 class="policy-card-title">Green Credit Programme</h3>
         <p class="policy-card-desc">Voluntary carbon credits for non-energy sustainability actions including tree plantation, water conservation, and waste management.</p>
-        <div class="policy-card-status">
-          <span class="status-dot"></span>
-          <span>Active — Voluntary Track</span>
-        </div>
+        <div class="policy-card-status"><span class="status-dot"></span><span>Active — Voluntary Track</span></div>
       </article>
 
-      <article class="policy-card" data-category="act">
+      <article class="policy-card" data-category="act" style="--accent:var(--green);">
         <span class="policy-card-tag tag-act">Act</span>
         <h3 class="policy-card-title">Environment Protection Act</h3>
         <p class="policy-card-desc">Provides the enabling framework for pollution-based environmental regulations and standard-setting in India.</p>
-        <div class="policy-card-status">
-          <span class="status-dot"></span>
-          <span>Active — 1986, Foundational</span>
-        </div>
+        <div class="policy-card-status"><span class="status-dot"></span><span>Active — 1986, Foundational</span></div>
       </article>
 
-      <article class="policy-card" data-category="body">
+      <article class="policy-card" data-category="body" style="--accent:var(--policy-blue);">
         <span class="policy-card-tag tag-body">Body</span>
         <h3 class="policy-card-title">BEE — Bureau of Energy Efficiency</h3>
         <p class="policy-card-desc">Administers PAT, CCTS implementation, and energy efficiency certification under the Ministry of Power.</p>
-        <div class="policy-card-status">
-          <span class="status-dot body"></span>
-          <span>Regulatory Body — Ministry of Power</span>
-        </div>
+        <div class="policy-card-status"><span class="status-dot body"></span><span>Regulatory Body — Ministry of Power</span></div>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 7. COMPLIANCE CHECKER                                          -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 9. COMPLIANCE CHECKER ═══════════════════════════════════ -->
 <section id="compliance" aria-labelledby="compliance-heading">
   <div class="compliance-inner">
     <div class="compliance-left">
-      <h2 class="section-heading" id="compliance-heading-label" style="color:#fff;">Compliance Check</h2>
-      <p class="section-subheading" style="color:#fff;">Does this affect your business?</p>
+      <h2 class="compliance-headline" id="compliance-heading">Compliance Check</h2>
+      <p class="section-subheading">Does this affect your business?</p>
       <p class="compliance-sub">Check your exposure to PAT, CCTS, and the EU Carbon Border Tax in three steps.</p>
     </div>
 
@@ -1989,8 +1066,7 @@
         <div class="checker-step">02</div>
         <div class="checker-title">Enter your scale</div>
         <div class="checker-sub-text">Annual energy consumption in gigajoules (GJ)</div>
-        <input type="number" class="dark-input" id="scale-input"
-               placeholder="e.g. 50000 GJ" aria-label="Enter annual energy consumption in gigajoules" min="0" />
+        <input type="number" class="dark-input" id="scale-input" placeholder="e.g. 50000 GJ" aria-label="Enter annual energy consumption in gigajoules" min="0" />
       </div>
 
       <div class="checker-card">
@@ -1999,7 +1075,7 @@
         <div class="obligation-result result-empty" id="obligation-result" aria-live="polite">
           Select a sector and enter your scale above to see your compliance status.
         </div>
-        <a href="#" class="checker-cta" id="checker-cta" style="display:none;">Get full compliance report →</a>
+        <a href="#" class="btn checker-cta" id="checker-cta" style="display:none;">Get full compliance report <span class="arrow" aria-hidden="true">→</span></a>
       </div>
 
       <div class="compliance-legend" aria-label="Compliance result legend">
@@ -2011,91 +1087,78 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 9. CARBON MARKET EVOLUTION                                     -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 10. CARBON MARKET EVOLUTION ═════════════════════════════ -->
 <section id="evolution" aria-labelledby="evolution-heading">
   <div class="evolution-inner">
-    <div class="evolution-header">
-      <h2 class="section-heading" id="evolution-heading">The evolution of India's carbon market</h2>
-      <p class="evolution-sub">Key policy milestones</p>
-    </div>
-
-    <div class="milestone-rows" id="milestone-rows">
-
-      <!-- "Now" always visible -->
-      <div class="milestone-row">
-        <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-        <div class="milestone-card" style="border-color: var(--green); background: #F4FAF7;">
-          <div class="milestone-card-year">Now</div>
-          <div class="milestone-card-title">CCTS Pilot Phase — Registry Live</div>
-          <div class="milestone-card-desc">The pilot phase of CCTS is underway with approximately 300 large industrial facilities obligated. Grid-India manages the national carbon credit registry. The first compliance cycle is active with sector-specific baselines being established.</div>
-        </div>
+    <div class="evolution-left">
+      <div class="evolution-header" data-reveal>
+        <h2 class="evolution-heading" id="evolution-heading">The evolution of India's carbon market</h2>
+        <p class="evolution-sub">Key policy milestones</p>
       </div>
-
+      <button class="timeline-toggle" id="timeline-toggle" aria-expanded="false" aria-controls="milestone-history">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Show history
+      </button>
     </div>
 
-    <!-- Toggle button -->
-    <button class="timeline-toggle" id="timeline-toggle" aria-expanded="false" aria-controls="milestone-history">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Show history
-    </button>
-
-    <!-- Collapsed history -->
-    <div class="milestone-history" id="milestone-history">
-      <div class="milestone-rows" style="padding-top: 4px;">
-
-        <div class="milestone-row revealed">
-          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-          <div class="milestone-card">
-            <div class="milestone-card-year">2023</div>
-            <div class="milestone-card-title">CCTS Notified</div>
-            <div class="milestone-card-desc">The Carbon Credit Trading Scheme is officially notified by MoEF. It establishes a compliance market (mandatory for Designated Consumers) and an offset market (voluntary). BEE is designated the administrator.</div>
+    <div class="evolution-right">
+      <div class="milestone-rows" id="milestone-rows">
+        <div class="milestone-row">
+          <div class="milestone-row-left"><div class="milestone-dot live"></div></div>
+          <div class="milestone-card milestone-now">
+            <div class="milestone-card-year">Now</div>
+            <div class="milestone-card-title">CCTS Pilot Phase — Registry Live</div>
+            <div class="milestone-card-desc">The pilot phase of CCTS is underway with approximately 300 large industrial facilities obligated. Grid-India manages the national carbon credit registry. The first compliance cycle is active with sector-specific baselines being established.</div>
           </div>
         </div>
 
-        <div class="milestone-row revealed">
-          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-          <div class="milestone-card">
-            <div class="milestone-card-year">2022</div>
-            <div class="milestone-card-title">EC Act Amended — Carbon Markets Legalised</div>
-            <div class="milestone-card-desc">The Energy Conservation (Amendment) Act 2022 explicitly enables the establishment of a carbon market in India. This legislative change gave MoEF the authority to notify a Carbon Credit Trading Scheme.</div>
+        <div class="milestone-history" id="milestone-history">
+          <div class="milestone-row">
+            <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+            <div class="milestone-card">
+              <div class="milestone-card-year">2023</div>
+              <div class="milestone-card-title">CCTS Notified</div>
+              <div class="milestone-card-desc">The Carbon Credit Trading Scheme is officially notified by MoEF. It establishes a compliance market (mandatory for Designated Consumers) and an offset market (voluntary). BEE is designated the administrator.</div>
+            </div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+            <div class="milestone-card">
+              <div class="milestone-card-year">2022</div>
+              <div class="milestone-card-title">EC Act Amended — Carbon Markets Legalised</div>
+              <div class="milestone-card-desc">The Energy Conservation (Amendment) Act 2022 explicitly enables the establishment of a carbon market in India. This legislative change gave MoEF the authority to notify a Carbon Credit Trading Scheme.</div>
+            </div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+            <div class="milestone-card">
+              <div class="milestone-card-year">2012</div>
+              <div class="milestone-card-title">PAT Scheme Launched</div>
+              <div class="milestone-card-desc">Bureau of Energy Efficiency launches the Perform Achieve &amp; Trade scheme — India's first domestic market-based energy efficiency mechanism. Designated Consumers in 8 industrial sectors receive specific energy consumption targets.</div>
+            </div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone-row-left"><div class="milestone-dot"></div></div>
+            <div class="milestone-card">
+              <div class="milestone-card-year">2005</div>
+              <div class="milestone-card-title">CDM Participation Begins</div>
+              <div class="milestone-card-desc">India joins the Clean Development Mechanism under the Kyoto Protocol, becoming one of the largest CDM credit suppliers globally. Projects in renewables, energy efficiency, and waste management generate Certified Emission Reductions (CERs).</div>
+            </div>
           </div>
         </div>
-
-        <div class="milestone-row revealed">
-          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-          <div class="milestone-card">
-            <div class="milestone-card-year">2012</div>
-            <div class="milestone-card-title">PAT Scheme Launched</div>
-            <div class="milestone-card-desc">Bureau of Energy Efficiency launches the Perform Achieve &amp; Trade scheme — India's first domestic market-based energy efficiency mechanism. Designated Consumers in 8 industrial sectors receive specific energy consumption targets.</div>
-          </div>
-        </div>
-
-        <div class="milestone-row revealed">
-          <div class="milestone-row-left"><div class="milestone-dot"></div></div>
-          <div class="milestone-card">
-            <div class="milestone-card-year">2005</div>
-            <div class="milestone-card-title">CDM Participation Begins</div>
-            <div class="milestone-card-desc">India joins the Clean Development Mechanism under the Kyoto Protocol, becoming one of the largest CDM credit suppliers globally. Projects in renewables, energy efficiency, and waste management generate Certified Emission Reductions (CERs).</div>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 10. GLOBAL CONTEXT                                             -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 11. GLOBAL CONTEXT ══════════════════════════════════════ -->
 <section id="global" aria-labelledby="global-heading">
   <div class="global-inner">
     <div class="global-left">
-      <h2 class="section-heading" id="global-heading-label" style="color:#fff;">Global Context</h2>
-      <p class="section-subheading" style="color:#fff;">The EU's carbon border tax changes the equation.</p>
+      <h2 class="global-headline" id="global-heading">Global Context</h2>
+      <p class="section-subheading">The EU's carbon border tax changes the equation.</p>
       <p class="global-sub">CBAM means Indian steel and aluminium exporters now face a choice: pay carbon costs in Brussels, or prove they already paid them at home. A credible domestic market changes the math entirely.</p>
       <div class="global-stat-card">
         <div class="global-stat-value">~$8–12B</div>
@@ -2150,13 +1213,16 @@
   </div>
 </section>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- 11. FOOTER                                                     -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ 12. FOOTER ══════════════════════════════════════════════ -->
 <footer id="footer" role="contentinfo">
   <div class="footer-inner">
     <div>
-      <p class="footer-logo">✦ Carbon Pulse</p>
+      <p class="footer-logo">
+        <span class="pulse-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none"><path d="M3.5 17h6.2l2.3-7.6 4.9 13.8 2.4-6.2H28.5" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        Carbon Pulse
+      </p>
       <p class="footer-tagline">India's carbon market intelligence platform.</p>
       <p class="footer-disclaimer">Data sourced from MoEF, BEE, CERC. Not legal or investment advice.</p>
     </div>
@@ -2180,136 +1246,125 @@
   </div>
 </footer>
 
-<!-- ══════════════════════════════════════════════════════════════ -->
-<!-- JAVASCRIPT                                                     -->
-<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ══ JAVASCRIPT ══════════════════════════════════════════════ -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── NAV: scroll state & hamburger ───────────────────────────── */
-  var nav         = document.getElementById('nav');
-  var hero        = document.getElementById('hero');
-  var hamburger   = document.getElementById('hamburger');
-  var mobileMenu  = document.getElementById('mobile-menu');
+  var nav        = document.getElementById('nav');
+  var hero       = document.getElementById('hero');
+  var hamburger  = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
 
   window.addEventListener('scroll', function () {
-    var heroBottom = hero.getBoundingClientRect().bottom;
-    nav.classList.toggle('scrolled', heroBottom <= 68);
+    nav.classList.toggle('scrolled', hero.getBoundingClientRect().bottom <= 68);
   }, { passive: true });
 
   hamburger.addEventListener('click', function () {
     var isOpen = mobileMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
     hamburger.setAttribute('aria-expanded', String(isOpen));
   });
   mobileMenu.querySelectorAll('a').forEach(function (a) {
     a.addEventListener('click', function () {
       mobileMenu.classList.remove('open');
+      hamburger.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
     });
   });
 
-  /* ── HERO: parallax + scroll indicator ──────────────────────── */
-  var heroParallax     = document.getElementById('hero-parallax');
-  var scrollIndicator  = document.getElementById('scroll-indicator');
-
-  window.addEventListener('scroll', function () {
-    var sy       = window.scrollY;
-    var heroH    = hero.offsetHeight;
-    var progress = Math.min(sy / (heroH * 0.4), 1);
-    heroParallax.style.transform = 'translateY(' + (sy * 0.4) + 'px)';
-    heroParallax.style.opacity   = String(1 - progress);
-    scrollIndicator.style.opacity = String(Math.max(0, 1 - sy / 200));
-  }, { passive: true });
+  /* ── HERO: parallax + scroll indicator (guarded) ─────────────── */
+  var heroParallax    = document.getElementById('hero-parallax');
+  var scrollIndicator = document.getElementById('scroll-indicator');
+  if (!reduceMotion) {
+    window.addEventListener('scroll', function () {
+      var sy = window.scrollY;
+      var progress = Math.min(sy / (hero.offsetHeight * 0.4), 1);
+      if (heroParallax) {
+        heroParallax.style.transform = 'translateY(' + (sy * 0.35) + 'px)';
+        heroParallax.style.opacity = String(1 - progress);
+      }
+      if (scrollIndicator) scrollIndicator.style.opacity = String(Math.max(0, 1 - sy / 200));
+    }, { passive: true });
+  }
 
   /* ── STATS BAR: count-up on viewport entry ───────────────────── */
   var statDefs = [
     { el: document.getElementById('stat-0'), target: 1.9, dec: 1, suffix: 't' },
     { el: document.getElementById('stat-1'), target: 45,  dec: 0, suffix: '%' },
-    { el: document.getElementById('stat-2'), target: 203, dec: 0, suffix: ' GW' },
-    { el: document.getElementById('stat-3'), target: 14,  dec: 0, suffix: '+' },
-  ];
+    { el: document.getElementById('stat-2'), target: 203, dec: 0, suffix: ' GW' }
+  ].filter(function (s) { return s.el; });
   var statsAnimated = false;
 
   function runCountUp() {
     if (statsAnimated) return;
     statsAnimated = true;
-    var dur   = 1000;
-    var start = performance.now();
+    if (reduceMotion) {
+      statDefs.forEach(function (s) { s.el.textContent = s.target.toFixed(s.dec) + s.suffix; });
+      return;
+    }
+    var dur = 1000, start = performance.now();
     function tick(now) {
-      var t    = Math.min((now - start) / dur, 1);
+      var t = Math.min((now - start) / dur, 1);
       var ease = 1 - Math.pow(1 - t, 3);
       statDefs.forEach(function (s) {
         var from = s.target * 0.6;
-        var val  = from + (s.target - from) * ease;
-        s.el.textContent = val.toFixed(s.dec) + s.suffix;
+        s.el.textContent = (from + (s.target - from) * ease).toFixed(s.dec) + s.suffix;
       });
-      if (t < 1) { requestAnimationFrame(tick); }
-      else { statDefs.forEach(function (s) { s.el.textContent = s.target.toFixed(s.dec) + s.suffix; }); }
+      if (t < 1) requestAnimationFrame(tick);
+      else statDefs.forEach(function (s) { s.el.textContent = s.target.toFixed(s.dec) + s.suffix; });
     }
     requestAnimationFrame(tick);
   }
-
   var statsBar = document.getElementById('stats-bar');
-  new IntersectionObserver(function (entries) {
-    if (entries[0].isIntersecting) runCountUp();
-  }, { threshold: 0.4 }).observe(statsBar);
+  if ('IntersectionObserver' in window && statsBar) {
+    new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) runCountUp();
+    }, { threshold: 0.4 }).observe(statsBar);
+  } else { runCountUp(); }
 
-  /* ── STRATA: staggered scroll reveal ────────────────────────── */
-  var strataCards = document.querySelectorAll('[data-strata]');
-  var strataObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        var card = entry.target;
-        var delay = parseInt(card.dataset.strataDelay || 0);
-        setTimeout(function() { card.classList.add('revealed'); }, delay);
-        strataObs.unobserve(card);
-      }
-    });
-  }, { threshold: 0.15 });
-  strataCards.forEach(function(card, i) {
-    card.dataset.strataDelay = i * 150;
-    strataObs.observe(card);
-  });
-
-  /* ── SCROLL REVEAL (How It Works + Timeline) ────────────────── */
-  var milestoneRows = document.querySelectorAll('.milestone-row');
-  if ('IntersectionObserver' in window) {
-    var rowObserver = new IntersectionObserver(function (entries) {
+  /* ── GENERIC SCROLL REVEAL ───────────────────────────────────── */
+  var revealEls = document.querySelectorAll('[data-reveal], [data-strata], .milestone-row');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var revObs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          rowObserver.unobserve(entry.target);
+          var el = entry.target;
+          var delay = el.hasAttribute('data-strata') ? (parseInt(el.dataset.strataDelay || 0)) : 0;
+          setTimeout(function () { el.classList.add('revealed'); }, delay);
+          revObs.unobserve(el);
         }
       });
     }, { threshold: 0.12 });
-    milestoneRows.forEach(function (row) {
-      rowObserver.observe(row);
+    var strataIdx = 0;
+    revealEls.forEach(function (el) {
+      if (el.hasAttribute('data-strata')) { el.dataset.strataDelay = (strataIdx++) * 140; }
+      revObs.observe(el);
     });
   } else {
-    milestoneRows.forEach(function (row) { row.classList.add('revealed'); });
+    revealEls.forEach(function (el) { el.classList.add('revealed'); });
   }
 
-  /* ── HOW IT WORKS — STICKY SCROLL ──────────────────────────── */
+  /* ── HOW IT WORKS — STICKY SCROLL ────────────────────────────── */
   var howOuter = document.getElementById('how-sticky-outer');
   var howCards = document.querySelectorAll('.how-card');
   var howDots  = document.querySelectorAll('.how-prog-dot');
   function updateHowCards() {
     if (!howOuter) return;
-    var rect     = howOuter.getBoundingClientRect();
-    var scrolled = -rect.top;
+    var rect = howOuter.getBoundingClientRect();
     var sectionH = howOuter.offsetHeight - window.innerHeight;
-    var progress = Math.max(0, Math.min(1, scrolled / sectionH));
-    var idx      = Math.min(howCards.length - 1, Math.floor(progress * howCards.length));
+    var progress = Math.max(0, Math.min(1, (-rect.top) / sectionH));
+    var idx = Math.min(howCards.length - 1, Math.floor(progress * howCards.length));
     howCards.forEach(function (c, i) { c.classList.toggle('active', i === idx); });
     howDots.forEach(function (d, i)  { d.classList.toggle('active', i === idx); });
   }
   window.addEventListener('scroll', updateHowCards, { passive: true });
   updateHowCards();
 
-  /* ── POLICY FILTER TABS ─────────────────────────────────────── */
+  /* ── POLICY FILTER TABS ──────────────────────────────────────── */
   var filterTabs  = document.querySelectorAll('.filter-tab');
   var policyCards = document.querySelectorAll('.policy-card');
-
   filterTabs.forEach(function (tab) {
     tab.addEventListener('click', function () {
       filterTabs.forEach(function (t) { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
@@ -2317,19 +1372,18 @@ document.addEventListener('DOMContentLoaded', function () {
       tab.setAttribute('aria-selected', 'true');
       var filter = tab.dataset.filter;
       policyCards.forEach(function (card) {
-        var match = filter === 'all' || card.dataset.category === filter;
-        card.classList.toggle('hidden', !match);
+        card.classList.toggle('hidden', !(filter === 'all' || card.dataset.category === filter));
       });
     });
   });
 
-  /* ── COMPLIANCE CHECKER ─────────────────────────────────────── */
-  var chips           = document.querySelectorAll('.sector-chip');
-  var scaleInput      = document.getElementById('scale-input');
-  var obligationEl    = document.getElementById('obligation-result');
-  var checkerCta      = document.getElementById('checker-cta');
-  var selectedSector  = null;
-  var heavySectors    = ['Steel', 'Cement', 'Aluminium', 'Fertilisers', 'Refineries', 'Chlor-Alkali', 'Paper & Pulp', 'Petrochemicals'];
+  /* ── COMPLIANCE CHECKER ──────────────────────────────────────── */
+  var chips        = document.querySelectorAll('.sector-chip');
+  var scaleInput   = document.getElementById('scale-input');
+  var obligationEl = document.getElementById('obligation-result');
+  var checkerCta   = document.getElementById('checker-cta');
+  var selectedSector = null;
+  var heavySectors   = ['Steel', 'Cement', 'Aluminium', 'Fertilisers', 'Refineries', 'Chlor-Alkali', 'Paper & Pulp', 'Petrochemicals'];
   var moderateSectors = ['Textiles'];
 
   chips.forEach(function (chip) {
@@ -2341,19 +1395,19 @@ document.addEventListener('DOMContentLoaded', function () {
       evaluate();
     });
   });
-  scaleInput.addEventListener('input', evaluate);
+  if (scaleInput) scaleInput.addEventListener('input', evaluate);
 
   function evaluate() {
-    var scale   = parseFloat(scaleInput.value) || 0;
+    var scale = parseFloat(scaleInput.value) || 0;
     if (!selectedSector || scale === 0) {
       obligationEl.className = 'obligation-result result-empty';
       obligationEl.textContent = 'Select a sector and enter your scale above to see your compliance status.';
       checkerCta.style.display = 'none';
       return;
     }
-    var isHeavy    = heavySectors.indexOf(selectedSector) !== -1;
+    var isHeavy = heavySectors.indexOf(selectedSector) !== -1;
     var isModerate = moderateSectors.indexOf(selectedSector) !== -1;
-    var isLarge    = scale >= 418600;  /* ~10,000 TOE — PAT/CCTS Designated Consumer threshold */
+    var isLarge = scale >= 418600;        /* ~10,000 TOE — Designated Consumer threshold */
     var isApproaching = scale >= 100000;
     var cls, msg;
     if (isHeavy && isLarge) {
@@ -2369,74 +1423,74 @@ document.addEventListener('DOMContentLoaded', function () {
       cls = 'result-monitor';
       msg = '● Monitor — not currently obligated at this scale. Track regulatory updates as CCTS thresholds may tighten in future compliance cycles.';
     }
-    obligationEl.className   = 'obligation-result ' + cls;
+    obligationEl.className = 'obligation-result ' + cls;
     obligationEl.textContent = msg;
-    checkerCta.style.display = 'inline-block';
+    if (!reduceMotion) {
+      obligationEl.classList.remove('result-pop');
+      void obligationEl.offsetWidth;
+      obligationEl.classList.add('result-pop');
+    }
+    checkerCta.style.display = 'inline-flex';
   }
 
-  /* ── CHART.JS — CBAM HORIZONTAL BAR ────────────────────────── */
+  /* ── SCROLLSPY — highlight active nav link ───────────────────── */
+  var navLinkMap = {};
+  document.querySelectorAll('.nav-links a').forEach(function (a) {
+    var id = a.getAttribute('href').slice(1);
+    if (id) navLinkMap[id] = a;
+  });
+  var spyTargets = ['news', 'policy', 'global'].map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  if ('IntersectionObserver' in window) {
+    var spyObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          Object.keys(navLinkMap).forEach(function (k) { navLinkMap[k].classList.remove('active'); });
+          var link = navLinkMap[entry.target.id];
+          if (link) link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    spyTargets.forEach(function (t) { spyObs.observe(t); });
+  }
+
+  /* ── CHART.JS — CBAM HORIZONTAL BAR ──────────────────────────── */
   function initChart() {
     if (typeof Chart === 'undefined') return;
-
-    Chart.defaults.color        = '#8BBFAA';
-    Chart.defaults.borderColor  = '#1A5040';
-    Chart.defaults.font.family  = "'Inter', sans-serif";
-
+    Chart.defaults.color = '#A8C8B8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
     var canvas = document.getElementById('cbam-chart');
     if (!canvas) return;
-
     new Chart(canvas, {
       type: 'bar',
       data: {
         labels: ['Steel', 'Aluminium', 'Cement', 'Fertiliser', 'Chemicals'],
         datasets: [{
           data: [4.2, 1.8, 0.9, 0.7, 0.4],
-          backgroundColor: '#FFFFFF',
-          borderColor: 'transparent',
-          borderWidth: 0,
-          borderRadius: 4,
-          borderSkipped: false,
+          backgroundColor: ['#E8C25A', '#FFFFFF', '#FFFFFF', '#FFFFFF', '#FFFFFF'],
+          borderWidth: 0, borderRadius: 4, borderSkipped: false
         }]
       },
       options: {
-        indexAxis: 'y',
-        responsive: true,
-        maintainAspectRatio: false,
+        indexAxis: 'y', responsive: true, maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
           tooltip: {
-            backgroundColor: '#0A2818',
-            titleColor: '#FFFFFF',
-            bodyColor: '#8BBFAA',
-            borderColor: '#1A5040',
-            borderWidth: 1,
-            padding: 10,
-            callbacks: {
-              label: function (ctx) { return ' $' + ctx.parsed.x + 'B estimated exposure'; }
-            }
+            backgroundColor: '#0A2818', titleColor: '#FFFFFF', bodyColor: '#A8C8B8',
+            borderColor: 'rgba(255,255,255,0.12)', borderWidth: 1, padding: 10,
+            callbacks: { label: function (ctx) { return ' $' + ctx.parsed.x + 'B estimated exposure'; } }
           }
         },
         scales: {
-          x: {
-            grid: { color: '#1A5040' },
-            ticks: { color: '#8BBFAA', font: { size: 11 }, callback: function (v) { return '$' + v + 'B'; } },
-            border: { color: '#1A5040' },
-            beginAtZero: true,
-          },
-          y: {
-            grid: { display: false },
-            ticks: { color: '#8BBFAA', font: { size: 12, weight: '500' } },
-            border: { color: 'transparent' },
-          }
+          x: { grid: { color: 'rgba(255,255,255,0.07)' }, ticks: { color: '#A8C8B8', font: { size: 11 }, callback: function (v) { return '$' + v + 'B'; } }, border: { color: 'rgba(255,255,255,0.1)' }, beginAtZero: true },
+          y: { grid: { display: false }, ticks: { color: '#A8C8B8', font: { size: 12, weight: '500' } }, border: { color: 'transparent' } }
         },
-        animation: { duration: 900, easing: 'easeOutQuart' }
+        animation: reduceMotion ? false : { duration: 900, easing: 'easeOutQuart' }
       }
     });
   }
-
-  if (typeof Chart !== 'undefined') {
-    initChart();
-  } else {
+  if (typeof Chart !== 'undefined') { initChart(); }
+  else {
     var attempts = 0;
     var poll = setInterval(function () {
       attempts++;
@@ -2445,7 +1499,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }, 100);
   }
 
-  /* ── SMOOTH SCROLL (with nav offset) ────────────────────────── */
+  /* ── SMOOTH SCROLL (with nav offset) ─────────────────────────── */
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener('click', function (e) {
       var href = link.getAttribute('href');
@@ -2453,22 +1507,21 @@ document.addEventListener('DOMContentLoaded', function () {
       var target = document.querySelector(href);
       if (!target) return;
       e.preventDefault();
-      var top = target.getBoundingClientRect().top + window.scrollY - 84;
-      window.scrollTo({ top: top, behavior: 'smooth' });
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 84, behavior: reduceMotion ? 'auto' : 'smooth' });
     });
   });
 
-  // Timeline toggle
-  const tlBtn = document.getElementById('timeline-toggle');
-  const tlHistory = document.getElementById('milestone-history');
+  /* ── TIMELINE TOGGLE ─────────────────────────────────────────── */
+  var tlBtn = document.getElementById('timeline-toggle');
+  var tlHistory = document.getElementById('milestone-history');
   if (tlBtn && tlHistory) {
-    tlBtn.addEventListener('click', () => {
-      const open = tlHistory.classList.toggle('expanded');
+    tlBtn.addEventListener('click', function () {
+      var open = tlHistory.classList.toggle('expanded');
       tlBtn.classList.toggle('open', open);
-      tlBtn.setAttribute('aria-expanded', open);
+      tlBtn.setAttribute('aria-expanded', String(open));
       tlBtn.innerHTML = open
-        ? `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 9l5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Hide history`
-        : `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Show history`;
+        ? '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 9l5-5 5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Hide history'
+        : '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Show history';
     });
   }
 
